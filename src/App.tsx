@@ -1,20 +1,19 @@
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { StatusBar, Text } from "react-native";
+import { ThemeProvider, useTheme } from "./theme/ThemeContext";
 
-function App() {
-  const isDarkMode = useColorScheme() === "dark";
+function AppWithProviders() {
+  const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+    <>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle={theme === "dark" ? "light-content" : "dark-content"}
+      />
       <Text
         style={{
-          color: isDarkMode ? "#fff" : "#000",
+          color: theme === "dark" ? "#fff" : "#000",
           fontSize: 20,
           textAlign: "center",
           marginTop: 50,
@@ -22,14 +21,14 @@ function App() {
       >
         Bem-vindo ao MyFood!
       </Text>
-    </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
+export function App() {
+  return (
+    <ThemeProvider>
+      <AppWithProviders />
+    </ThemeProvider>
+  );
+}
