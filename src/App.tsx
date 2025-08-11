@@ -1,14 +1,26 @@
-import { StatusBar, View } from "react-native";
+import { useEffect } from "react";
+import { Platform, StatusBar } from "react-native";
 import { ThemeProvider, useTheme } from "./theme/ThemeContext";
 import { Navigation } from "./navigation";
 import { DarkTheme, DefaultTheme, Theme } from "@react-navigation/native";
+import SystemNavigationBar from "react-native-system-navigation-bar";
 
 function AppWithProviders() {
   const { theme } = useTheme();
   const navTheme: Theme = theme === "dark" ? DarkTheme : DefaultTheme;
 
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+
+    SystemNavigationBar.setNavigationColor(
+      navTheme.colors.card,
+      theme === "dark" ? "light" : "dark",
+      "navigation",
+    );
+  }, [theme, navTheme.colors.card]);
+
   return (
-    <View style={{ flex: 1, backgroundColor: navTheme.colors.card }}>
+    <>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -27,7 +39,7 @@ function AppWithProviders() {
           // SplashScreen.hideAsync();
         }}
       />
-    </View>
+    </>
   );
 }
 
