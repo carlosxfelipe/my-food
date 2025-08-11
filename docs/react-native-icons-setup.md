@@ -2,14 +2,16 @@
 
 ### 1. Instale as dependências
 
-**Usando Yarn**  
+**Usando Yarn**
+
 ```bash
 yarn add react-native-svg react-native-vector-icons
 yarn add -D @types/react-native-vector-icons
 npx pod-install # ⚠️ Chamar `pod install` está deprecated no React Native. Use `yarn ios` (Community CLI) ou `npx expo run:ios` (Expo).
 ```
 
-**Usando NPM**  
+**Usando NPM**
+
 ```bash
 npm install react-native-svg react-native-vector-icons
 npm install --save-dev @types/react-native-vector-icons
