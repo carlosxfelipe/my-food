@@ -11,6 +11,7 @@ import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
 import { NotFound } from "./screens/NotFound";
 import { BottomTabAdapter } from "./BottomTabAdapter";
+import { AppHeader } from "./AppHeader";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -56,6 +57,10 @@ const HomeTabs = createBottomTabNavigator({
     },
   },
   tabBar: (props) => <BottomTabAdapter {...props} />,
+  // Define o AppHeader como header padrão para todas as telas do TabNavigator
+  screenOptions: {
+    header: (props) => <AppHeader {...props} />,
+  },
 });
 
 const RootStack = createNativeStackNavigator({
@@ -79,6 +84,7 @@ const RootStack = createNativeStackNavigator({
       screen: Settings,
       options: ({ navigation }) => ({
         presentation: "modal",
+        headerLeft: () => null, // Remove a seta de voltar no modal para exibir apenas o botão "Close"
         headerRight: () => (
           <HeaderButton onPress={navigation.goBack}>
             <Text>Close</Text>
