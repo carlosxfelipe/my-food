@@ -1,4 +1,4 @@
-import { Button } from "@react-navigation/elements";
+// import { Button } from "@react-navigation/elements";
 import { StyleSheet } from "react-native";
 import { ThemedView } from "../../components/ThemedView";
 import { ThemedText } from "../../components/ThemedText";
@@ -13,9 +13,6 @@ export function Home() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">Tela Inicial</ThemedText>
-      <ThemedText>
-        Abra o arquivo 'src/App.tsx' para começar a trabalhar no seu app!
-      </ThemedText>
 
       {
         /* <Button
