@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ThemedView } from "../../components/ThemedView";
+import { ThemedScrollView } from "../../components/ThemedScrollView";
 import { ThemedText } from "../../components/ThemedText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { ThemedButton } from "../../components/ThemedButton";
@@ -54,7 +54,7 @@ export function Orders() {
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedScrollView style={styles.container}>
       <ThemedText type="title">Tela de Pedidos</ThemedText>
       <View style={{ marginTop: 30 }} />
 
@@ -82,8 +82,6 @@ export function Orders() {
       <ProgressBar
         value={0}
         mode="indeterminate"
-        showMarker={false}
-        showLabels={false}
         style={{ marginTop: 8, opacity: indeterminateRunning ? 1 : 0.4 }}
       />
       <ThemedButton
@@ -107,7 +105,7 @@ export function Orders() {
         onPress={startBuffer}
         buttonStyle={{ marginTop: 8 }}
       />
-    </ThemedView>
+    </ThemedScrollView>
   );
 }
 

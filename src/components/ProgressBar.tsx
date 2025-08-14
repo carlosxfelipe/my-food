@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
   LayoutChangeEvent,
+  StyleProp,
   StyleSheet,
   Text,
   View,
@@ -17,7 +18,7 @@ type Props = {
   radius?: number;
   showLabels?: boolean;
   showMarker?: boolean;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   trackLight?: string;
   trackDark?: string;
   fillLight?: string;
@@ -45,8 +46,8 @@ export function ProgressBar({
   max = 100,
   height = 10,
   radius,
-  showLabels = true,
-  showMarker = true,
+  showLabels = false,
+  showMarker = false,
   style,
   trackLight,
   trackDark,
