@@ -10,12 +10,24 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 ThemeContext.displayName = "ThemeContext";
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const system = (useColorScheme() ?? "light") as Theme;
-  const value = useMemo(() => ({ theme: system }), [system]);
+type ThemeProviderProps = {
+  children: React.ReactNode;
+  disableDarkMode?: boolean;
+};
 
-  return <ThemeContext.Provider value={value}>{children}
-  </ThemeContext.Provider>;
+export function ThemeProvider(
+  { children, disableDarkMode = false }: ThemeProviderProps,
+) {
+  const system = (useColorScheme() ?? "light") as Theme;
+  const effectiveTheme: Theme = disableDarkMode ? "light" : system;
+
+  const value = useMemo(() => ({ theme: effectiveTheme }), [effectiveTheme]);
+
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {

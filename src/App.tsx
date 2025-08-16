@@ -45,7 +45,7 @@ function AppWithProviders() {
 
 export function App() {
   return (
-    <ThemeProvider>
+    <ThemeProvider disableDarkMode={false}>
       <AppWithProviders />
     </ThemeProvider>
   );
