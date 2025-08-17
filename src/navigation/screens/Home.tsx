@@ -5,6 +5,7 @@ import { useThemeColor } from "../../hooks/useThemeColor";
 import { Product, ProductCard } from "../../components/ProductCard";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "../../components/Icon";
+import { HomeHeader } from "../../components/HomeHeader";
 
 const MOCK_PRODUCTS: Product[] = [
   {
@@ -81,6 +82,7 @@ export function Home() {
   const [rawQ, setRawQ] = useState("");
   const [q, setQ] = useState("");
   const [qtyById, setQtyById] = useState<Record<string, number>>({});
+  const [tag, setTag] = useState<string | undefined>(undefined);
 
   const bg = useThemeColor("background");
   const card = useThemeColor("surface");
@@ -90,8 +92,14 @@ export function Home() {
   // conecta a barra de busca do Header a esta tela
   useLayoutEffect(() => {
     navigation.setOptions?.({
-      onChangeQuery: (value: string) => setRawQ(value ?? ""),
-      onSearch: (query: string) => setRawQ(query ?? ""),
+      onChangeQuery: (value: string) => {
+        setTag(undefined);
+        setRawQ(value ?? "");
+      },
+      onSearch: (query: string) => {
+        setTag(undefined);
+        setRawQ(query ?? "");
+      },
       cartCount: Object.values(qtyById).reduce((a, b) => a + b, 0),
     } as any);
 
@@ -111,11 +119,21 @@ export function Home() {
 
   const data = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (query.length < 2) return MOCK_PRODUCTS;
-    return MOCK_PRODUCTS.filter((p) =>
-      [p.name, p.sku].some((s) => s?.toLowerCase().includes(query))
-    );
-  }, [q]);
+    let base = MOCK_PRODUCTS;
+
+    if (tag) {
+      base = base.filter((p) =>
+        (p.tags ?? []).map((t) => t.toLowerCase()).includes(tag.toLowerCase())
+      );
+    }
+
+    if (query.length >= 2) {
+      base = base.filter((p) =>
+        [p.name, p.sku].some((s) => s?.toLowerCase().includes(query))
+      );
+    }
+    return base;
+  }, [q, tag]);
 
   const subtotal = useMemo(() => {
     return Object.entries(qtyById).reduce((acc, [id, qty]) => {
@@ -151,6 +169,14 @@ export function Home() {
 
   const keyExtractor = (item: Product) => item.id;
 
+  const chips = useMemo(
+    () =>
+      Array.from(new Set(MOCK_PRODUCTS.flatMap((p) => p.tags ?? []))).filter(
+        Boolean,
+      ),
+    [],
+  );
+
   return (
     <View style={[styles.container, { backgroundColor: bg }]}>
       <FlatList
@@ -161,7 +187,22 @@ export function Home() {
         numColumns={2}
         columnWrapperStyle={styles.columns}
         ItemSeparatorComponent={ItemSeparator}
-        ListHeaderComponent={<ThemedText type="title">Tela Inicial</ThemedText>}
+        ListHeaderComponent={
+          <HomeHeader
+            chips={chips}
+            activeTag={tag}
+            onPick={(picked) => {
+              setRawQ("");
+              setQ("");
+              setTag(picked);
+            }}
+            onClear={() => {
+              setTag(undefined);
+              setRawQ("");
+              setQ("");
+            }}
+          />
+        }
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <ThemedText style={{ marginTop: 24 }}>
