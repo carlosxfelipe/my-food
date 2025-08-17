@@ -25,8 +25,7 @@ const MOCK_PRODUCTS: Product[] = [
     sku: "CHA-MATCHA-100",
     description: "Matcha cerimonial moído a pedra, ideal para lattes.",
     price: 59.9,
-    image:
-      "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/734983/pexels-photo-734983.jpeg",
     rating: 4.5,
     stock: 18,
     tags: ["orgânico"],
@@ -49,11 +48,22 @@ const MOCK_PRODUCTS: Product[] = [
     sku: "BIS-AMT-200",
     description: "Clássico amanteigado com toque de baunilha.",
     price: 14.5,
-    image:
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg",
     rating: 4.0,
     stock: 0,
     tags: ["indisponível"],
+  },
+  {
+    id: "p-106",
+    name: "Cupcake de Chocolate com Caramelo",
+    sku: "CUP-CHOC-CAR-1",
+    description:
+      "Massa de chocolate fofinha com cobertura cremosa de chocolate e caramelo.",
+    price: 9.9,
+    image: "https://images.pexels.com/photos/635409/pexels-photo-635409.jpeg",
+    rating: 4.8,
+    stock: 32,
+    tags: ["doce", "confeitaria", "novo"],
   },
 ];
 
