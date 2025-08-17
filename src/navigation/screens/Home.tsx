@@ -161,9 +161,7 @@ export function Home() {
         numColumns={2}
         columnWrapperStyle={styles.columns}
         ItemSeparatorComponent={ItemSeparator}
-        ListHeaderComponent={
-          <ThemedText type="title">Tela Inicial</ThemedText>
-        }
+        ListHeaderComponent={<ThemedText type="title">Tela Inicial</ThemedText>}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <ThemedText style={{ marginTop: 24 }}>
