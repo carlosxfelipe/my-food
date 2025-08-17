@@ -18,6 +18,7 @@ function HomeHeaderBase(
   const surfaceVariant = useThemeColor("surfaceVariant");
   const primary = useThemeColor("primary");
   const onPrimary = useThemeColor("onPrimary");
+  const iconColor = useThemeColor("text");
 
   return (
     <View style={{ marginBottom: 8 }}>
@@ -29,7 +30,7 @@ function HomeHeaderBase(
       </Text>
 
       <View style={styles.banner(surfaceVariant)}>
-        <Icon name="coffee" family="material-community" size={22} />
+        <Icon name="coffee" family="material-community" size={22} color={iconColor} />
         <Text style={{ fontWeight: "700", color: onSurface }}>
           Frete grátis acima de R$ 150
         </Text>

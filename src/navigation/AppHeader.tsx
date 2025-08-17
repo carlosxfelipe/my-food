@@ -85,7 +85,10 @@ export function AppHeader(props: HeaderProps) {
           icon="cart-outline"
           count={cartCount}
           tint={tint}
-          onPress={() => navigation.navigate("Orders" as never)}
+          onPress={() => {
+            const root = navigation.getParent?.() ?? navigation; // quando estamos no Stack
+            root.navigate("HomeTabs" as never, { screen: "Orders" } as never);
+          }}
         />
         <BadgeIcon
           icon="bell-outline"
