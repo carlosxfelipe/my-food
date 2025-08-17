@@ -229,7 +229,8 @@ const styles = StyleSheet.create({
   tagText: { fontSize: 11, fontWeight: "600" },
   unavailable: {
     position: "absolute",
-    inset: 0 as any,
+    // inset: 0 as any,
+    top: 0, right: 0, bottom: 0, left: 0,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#00000055",
