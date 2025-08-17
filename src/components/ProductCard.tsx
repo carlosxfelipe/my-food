@@ -9,18 +9,7 @@ import {
 } from "react-native";
 import { useThemeColor } from "../hooks/useThemeColor";
 import { Icon } from "./Icon";
-
-export type Product = {
-  id: string;
-  name: string;
-  sku: string;
-  description?: string;
-  price: number;
-  image: string;
-  rating?: number;
-  stock: number;
-  tags?: string[];
-};
+import { Product } from "../data/products";
 
 export type ProductCardProps = {
   product: Product;
