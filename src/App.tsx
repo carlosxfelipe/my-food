@@ -4,6 +4,7 @@ import { ThemeProvider, useTheme } from "./theme/ThemeContext";
 import { Navigation } from "./navigation";
 import { DarkTheme, DefaultTheme, Theme } from "@react-navigation/native";
 import SystemNavigationBar from "react-native-system-navigation-bar";
+import { CartProvider } from "./state/cart";
 
 function AppWithProviders() {
   const { theme } = useTheme();
@@ -46,7 +47,9 @@ function AppWithProviders() {
 export function App() {
   return (
     <ThemeProvider disableDarkMode={false}>
-      <AppWithProviders />
+      <CartProvider>
+        <AppWithProviders />
+      </CartProvider>
     </ThemeProvider>
   );
 }

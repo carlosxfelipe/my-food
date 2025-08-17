@@ -8,6 +8,7 @@ import { Icon } from "../../components/Icon";
 import { HomeHeader } from "../../components/HomeHeader";
 import { MOCK_PRODUCTS, Product } from "../../data/products";
 import { BRL } from "../../utils/format";
+import { useCart } from "../../state/cart";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -19,8 +20,9 @@ export function Home() {
   // rawQ = query imediata vinda do header
   const [rawQ, setRawQ] = useState("");
   const [q, setQ] = useState("");
-  const [qtyById, setQtyById] = useState<Record<string, number>>({});
   const [tag, setTag] = useState<string | undefined>(undefined);
+
+  const { qty, add, inc, dec } = useCart();
 
   const bg = useThemeColor("background");
   const card = useThemeColor("surface");
@@ -38,7 +40,7 @@ export function Home() {
         setTag(undefined);
         setRawQ(query ?? "");
       },
-      cartCount: Object.values(qtyById).reduce((a, b) => a + b, 0),
+      cartCount: Object.values(qty).reduce((a, b) => a + b, 0),
     } as any);
 
     return () => {
@@ -47,7 +49,7 @@ export function Home() {
         onSearch: undefined,
       } as any);
     };
-  }, [navigation, qtyById]);
+  }, [navigation, qty]);
 
   // debounce: espera 300ms antes de aplicar no filtro real
   useEffect(() => {
@@ -74,32 +76,21 @@ export function Home() {
   }, [q, tag]);
 
   const subtotal = useMemo(() => {
-    return Object.entries(qtyById).reduce((acc, [id, qty]) => {
+    return Object.entries(qty).reduce((acc, [id, amount]) => {
       const prod = MOCK_PRODUCTS.find((p) => p.id === id);
-      return acc + (prod ? prod.price * qty : 0);
+      return acc + (prod ? prod.price * amount : 0);
     }, 0);
-  }, [qtyById]);
+  }, [qty]);
 
   const renderItem: ListRenderItem<Product> = ({ item }) => {
-    const qty = qtyById[item.id] ?? 0;
+    const itemQty = qty[item.id] ?? 0;
     return (
       <ProductCard
         product={item}
-        quantity={qty}
-        onAdd={() => setQtyById((m) => ({ ...m, [item.id]: 1 }))}
-        onIncrease={() =>
-          setQtyById((m) => ({
-            ...m,
-            [item.id]: Math.min((m[item.id] ?? 0) + 1, item.stock),
-          }))}
-        onDecrease={() =>
-          setQtyById((m) => {
-            const cur = (m[item.id] ?? 0) - 1;
-            const next = { ...m } as Record<string, number>;
-            if (cur <= 0) delete next[item.id];
-            else next[item.id] = cur;
-            return next;
-          })}
+        quantity={itemQty}
+        onAdd={() => add(item.id, item.stock)}
+        onIncrease={() => inc(item.id, item.stock)}
+        onDecrease={() => dec(item.id)}
         onPress={() =>
           (navigation as any).navigate("ProductDetails", { id: item.id })}
         style={{ flex: 1 }}

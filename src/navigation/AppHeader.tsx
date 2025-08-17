@@ -5,6 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import type { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import type { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Icon } from "../components/Icon";
+import { useCart } from "../state/cart";
 
 type HeaderProps = NativeStackHeaderProps | BottomTabHeaderProps;
 
@@ -17,8 +18,9 @@ export function AppHeader(props: HeaderProps) {
   const tint = dark ? "#fff" : "#000";
   const placeholder = useMemo(() => (dark ? "#ffffff99" : "#00000066"), [dark]);
 
-  const cartCount = (options as any)?.cartCount ?? 9;
-  const bellCount = (options as any)?.bellCount ?? 9;
+  // const cartCount = Number((options as any)?.cartCount) || 0;
+  const { count: cartCount } = useCart();
+  const bellCount = Number((options as any)?.bellCount) || 0;
 
   return (
     <SafeAreaView
