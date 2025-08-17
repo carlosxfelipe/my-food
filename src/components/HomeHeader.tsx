@@ -30,7 +30,12 @@ function HomeHeaderBase(
       </Text>
 
       <View style={styles.banner(surfaceVariant)}>
-        <Icon name="coffee" family="material-community" size={22} color={iconColor} />
+        <Icon
+          name="coffee"
+          family="material-community"
+          size={22}
+          color={iconColor}
+        />
         <Text style={{ fontWeight: "700", color: onSurface }}>
           Frete grátis acima de R$ 150
         </Text>
