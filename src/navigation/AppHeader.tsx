@@ -63,6 +63,11 @@ export function AppHeader(props: HeaderProps) {
           placeholderTextColor={placeholder}
           style={styles.input}
           returnKeyType="search"
+          onChangeText={(text) => {
+            if (typeof (options as any)?.onChangeQuery === "function") {
+              (options as any).onChangeQuery(text);
+            }
+          }}
           onSubmitEditing={(e) => {
             const q = e.nativeEvent.text?.trim();
             if (!q) return;

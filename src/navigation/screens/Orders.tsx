@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "../../components/ThemedText";
 import { useThemeColor } from "../../hooks/useThemeColor";
@@ -66,30 +66,44 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 export function Orders() {
   const navigation = useNavigation();
+  // q = query efetiva (debounced)
+  // rawQ = query imediata vinda do header
+  const [rawQ, setRawQ] = useState("");
   const [q, setQ] = useState("");
   const [qtyById, setQtyById] = useState<Record<string, number>>({});
 
   const bg = useThemeColor("background");
   const card = useThemeColor("surface");
   const outline = useThemeColor("outline");
-  const text = useThemeColor("text");
+  const textColor = useThemeColor("text");
 
   // conecta a barra de busca do Header a esta tela
   useLayoutEffect(() => {
     navigation.setOptions?.({
-      onSearch: (query: string) => setQ(query ?? ""),
-      // opcional: atualizar contadores do header
+      onChangeQuery: (value: string) => setRawQ(value ?? ""),
+      onSearch: (query: string) => setRawQ(query ?? ""),
       cartCount: Object.values(qtyById).reduce((a, b) => a + b, 0),
     } as any);
+
+    return () => {
+      navigation.setOptions?.({
+        onChangeQuery: undefined,
+        onSearch: undefined,
+      } as any);
+    };
   }, [navigation, qtyById]);
+
+  // debounce: espera 300ms antes de aplicar no filtro real
+  useEffect(() => {
+    const id = setTimeout(() => setQ(rawQ), 300);
+    return () => clearTimeout(id);
+  }, [rawQ]);
 
   const data = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return MOCK_PRODUCTS;
+    if (query.length < 2) return MOCK_PRODUCTS;
     return MOCK_PRODUCTS.filter((p) =>
-      [p.name, p.sku, p.description].some((s) =>
-        s?.toLowerCase().includes(query)
-      )
+      [p.name, p.sku].some((s) => s?.toLowerCase().includes(query))
     );
   }, [q]);
 
@@ -141,6 +155,11 @@ export function Orders() {
           <ThemedText type="title">Tela de Pedidos</ThemedText>
         }
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <ThemedText style={{ marginTop: 24 }}>
+            Nenhum produto encontrado para “{q}”.
+          </ThemedText>
+        }
       />
 
       <View
@@ -154,12 +173,12 @@ export function Orders() {
           <Icon
             name="cart-outline"
             size={22}
-            color={text}
+            color={textColor}
             family="material-community"
           />
-          <Text style={[styles.cartText, { color: text }]}>Subtotal</Text>
+          <Text style={[styles.cartText, { color: textColor }]}>Subtotal</Text>
         </View>
-        <Text style={[styles.cartValue, { color: text }]}>
+        <Text style={[styles.cartValue, { color: textColor }]}>
           {BRL.format(subtotal)}
         </Text>
       </View>
