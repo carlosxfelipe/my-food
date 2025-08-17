@@ -3,20 +3,18 @@ import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "../../components/ThemedText";
 import { useThemeColor } from "../../hooks/useThemeColor";
 import { ProductCard } from "../../components/ProductCard";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Icon } from "../../components/Icon";
 import { HomeHeader } from "../../components/HomeHeader";
 import { MOCK_PRODUCTS, Product } from "../../data/products";
-
-const BRL = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
+import { BRL } from "../../utils/format";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
 export function Home() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<
+    NavigationProp<ReactNavigation.RootParamList>
+  >();
   // q = query efetiva (debounced)
   // rawQ = query imediata vinda do header
   const [rawQ, setRawQ] = useState("");
@@ -102,6 +100,8 @@ export function Home() {
             else next[item.id] = cur;
             return next;
           })}
+        onPress={() =>
+          (navigation as any).navigate("ProductDetails", { id: item.id })}
         style={{ flex: 1 }}
       />
     );

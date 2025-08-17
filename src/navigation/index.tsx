@@ -12,6 +12,7 @@ import { Settings } from "./screens/Settings";
 import { NotFound } from "./screens/NotFound";
 import { BottomTabAdapter } from "./BottomTabAdapter";
 import { AppHeader } from "./AppHeader";
+import { ProductDetails } from "./screens/ProductDetails";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -70,6 +71,17 @@ const RootStack = createNativeStackNavigator({
       options: {
         title: "Home",
         headerShown: false,
+      },
+    },
+    ProductDetails: {
+      screen: ProductDetails,
+      options: {
+        // usa o mesmo header customizado (com seta de voltar)
+        header: (props) => <AppHeader {...props} />,
+      },
+      linking: {
+        path: "product/:id",
+        parse: { id: (value) => String(value) },
       },
     },
     Profile: {

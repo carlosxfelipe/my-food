@@ -10,6 +10,7 @@ import {
 import { useThemeColor } from "../hooks/useThemeColor";
 import { Icon } from "./Icon";
 import { Product } from "../data/products";
+import { BRL } from "../utils/format";
 
 export type ProductCardProps = {
   product: Product;
@@ -17,13 +18,9 @@ export type ProductCardProps = {
   onAdd: () => void;
   onIncrease: () => void;
   onDecrease: () => void;
+  onPress?: () => void;
   style?: ViewStyle;
 };
-
-const BRL = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
 
 export function ProductCard({
   product,
@@ -31,6 +28,7 @@ export function ProductCard({
   onAdd,
   onIncrease,
   onDecrease,
+  onPress,
   style,
 }: ProductCardProps) {
   const surface = useThemeColor("surface");
@@ -45,10 +43,16 @@ export function ProductCard({
   const outOfStock = product.stock === 0;
 
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={onPress}
+      disabled={!onPress}
+      style={({ pressed }) => [
         styles.card,
-        { backgroundColor: surface, borderColor: outline },
+        {
+          backgroundColor: surface,
+          borderColor: outline,
+          opacity: pressed ? 0.98 : 1,
+        },
         style,
       ]}
     >
@@ -158,10 +162,7 @@ export function ProductCard({
                 onPress={onDecrease}
                 style={({ pressed }) => [
                   styles.qtyBtn,
-                  {
-                    borderColor: outline,
-                    opacity: pressed ? 0.8 : 1,
-                  },
+                  { borderColor: outline, opacity: pressed ? 0.8 : 1 },
                 ]}
               >
                 <Icon
@@ -179,10 +180,7 @@ export function ProductCard({
                 disabled={quantity >= product.stock}
                 style={({ pressed }) => [
                   styles.qtyBtn,
-                  {
-                    borderColor: outline,
-                    opacity: pressed ? 0.8 : 1,
-                  },
+                  { borderColor: outline, opacity: pressed ? 0.8 : 1 },
                 ]}
               >
                 <Icon
@@ -195,7 +193,7 @@ export function ProductCard({
             </View>
           )}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
