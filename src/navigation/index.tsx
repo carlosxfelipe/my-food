@@ -22,8 +22,6 @@ const HomeTabs = createBottomTabNavigator({
         title: "Início",
         tabBarIconNameActive: "home",
         tabBarIconNameInactive: "home-outline",
-        tabBarIconFamilyActive: "material-community",
-        tabBarIconFamilyInactive: "material-community",
       } as any,
     },
     Orders: {
@@ -32,8 +30,6 @@ const HomeTabs = createBottomTabNavigator({
         title: "Pedidos",
         tabBarIconNameActive: "package-variant",
         tabBarIconNameInactive: "package-variant-closed",
-        tabBarIconFamilyActive: "material-community",
-        tabBarIconFamilyInactive: "material-community",
       } as any,
     },
     Settings: {
@@ -42,8 +38,6 @@ const HomeTabs = createBottomTabNavigator({
         title: "Configurações",
         tabBarIconNameActive: "cog",
         tabBarIconNameInactive: "cog-outline",
-        tabBarIconFamilyActive: "material-community",
-        tabBarIconFamilyInactive: "material-community",
       } as any,
     },
     Profile: {
@@ -52,8 +46,6 @@ const HomeTabs = createBottomTabNavigator({
         title: "Perfil",
         tabBarIconNameActive: "account",
         tabBarIconNameInactive: "account-outline",
-        tabBarIconFamilyActive: "material-community",
-        tabBarIconFamilyInactive: "material-community",
       } as any,
     },
   },

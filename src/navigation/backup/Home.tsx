@@ -5,7 +5,7 @@ import { ThemedText } from "../../components/ThemedText";
 import { ThemedButton } from "../../components/ThemedButton";
 import { type NavigationProp, useNavigation } from "@react-navigation/native";
 
-export function HomeDemo() {
+export function Home() {
   const navigation = useNavigation<
     NavigationProp<ReactNavigation.RootParamList>
   >();
