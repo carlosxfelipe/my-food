@@ -35,18 +35,6 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["orgânico"],
   },
   {
-    id: "p-103",
-    name: "Cafeteira Prensa Francesa 600ml",
-    sku: "PRENSA-600",
-    description: "Vidro borossilicato com malha de aço inoxidável.",
-    price: 119.9,
-    image:
-      "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1200&auto=format&fit=crop",
-    rating: 4.2,
-    stock: 7,
-    tags: ["acessório"],
-  },
-  {
     id: "p-104",
     name: "Biscoito Amanteigado 200g",
     sku: "BIS-AMT-200",
@@ -68,5 +56,42 @@ export const MOCK_PRODUCTS: Product[] = [
     rating: 4.8,
     stock: 32,
     tags: ["doce", "confeitaria", "novo"],
+  },
+  {
+    id: "p-108",
+    name: "Chá de Hibisco 50g",
+    sku: "CHA-HIB-50",
+    description:
+      "Flores de hibisco secas, sabor levemente ácido e refrescante.",
+    price: 19.9,
+    image: "https://images.pexels.com/photos/5946686/pexels-photo-5946686.jpeg",
+    rating: 4.3,
+    stock: 12,
+    tags: ["chá", "natural"],
+  },
+  {
+    id: "p-109",
+    name: "Caneca de Porcelana 300ml",
+    sku: "CAN-300-BLC",
+    description: "Caneca branca clássica de porcelana, ideal para café ou chá.",
+    price: 24.9,
+    image:
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop",
+    rating: 4.1,
+    stock: 64,
+    tags: ["acessório", "utilitário"],
+  },
+  {
+    id: "p-110",
+    name: "Brownie de Nozes 80g",
+    sku: "BRO-NOZ-80",
+    description:
+      "Brownie artesanal de chocolate meio amargo com pedaços de nozes.",
+    price: 8.5,
+    image:
+      "https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg",
+    rating: 4.9,
+    stock: 20,
+    tags: ["doce", "confeitaria", "artesanal"],
   },
 ];
