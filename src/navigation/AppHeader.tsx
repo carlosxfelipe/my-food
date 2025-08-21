@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
@@ -21,6 +21,18 @@ export function AppHeader(props: HeaderProps) {
   // const cartCount = Number((options as any)?.cartCount) || 0;
   const { count: cartCount } = useCart();
   const bellCount = Number((options as any)?.bellCount) || 0;
+
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debounceDelay = 400;
+
+  function handleChangeText(text: string) {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      if (typeof (options as any)?.onChangeQuery === "function") {
+        (options as any).onChangeQuery(text);
+      }
+    }, debounceDelay);
+  }
 
   return (
     <SafeAreaView
@@ -64,11 +76,7 @@ export function AppHeader(props: HeaderProps) {
           placeholderTextColor={placeholder}
           style={styles.input}
           returnKeyType="search"
-          onChangeText={(text) => {
-            if (typeof (options as any)?.onChangeQuery === "function") {
-              (options as any).onChangeQuery(text);
-            }
-          }}
+          onChangeText={handleChangeText}
           onSubmitEditing={(e) => {
             const q = e.nativeEvent.text?.trim();
             if (!q) return;

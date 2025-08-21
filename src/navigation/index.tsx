@@ -32,14 +32,14 @@ const HomeTabs = createBottomTabNavigator({
         tabBarIconNameInactive: "package-variant-closed",
       } as any,
     },
-    Settings: {
-      screen: Settings,
-      options: {
-        title: "Configurações",
-        tabBarIconNameActive: "cog",
-        tabBarIconNameInactive: "cog-outline",
-      } as any,
-    },
+    // Settings: {
+    //   screen: Settings,
+    //   options: {
+    //     title: "Configurações",
+    //     tabBarIconNameActive: "cog",
+    //     tabBarIconNameInactive: "cog-outline",
+    //   } as any,
+    // },
     Profile: {
       screen: Profile,
       options: {
