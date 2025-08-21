@@ -30,9 +30,9 @@ export function AppHeader(props: HeaderProps) {
         { backgroundColor: colors.card, borderBottomColor: colors.border },
       ]}
     >
-      <View style={styles.left}>
-        {back
-          ? (
+      <View style={[styles.left, !back && { width: 0 }]}>
+        {back &&
+          (
             <Pressable onPress={navigation.goBack} hitSlop={8}>
               <Icon
                 name="chevron-left"
@@ -41,8 +41,7 @@ export function AppHeader(props: HeaderProps) {
                 family="material-community"
               />
             </Pressable>
-          )
-          : <View style={{ width: 28 }} />}
+          )}
       </View>
 
       <View

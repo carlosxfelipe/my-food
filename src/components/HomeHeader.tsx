@@ -23,7 +23,7 @@ function HomeHeaderBase(
   return (
     <View style={{ marginBottom: 8 }}>
       <Text style={{ fontSize: 28, fontWeight: "800", color: onSurface }}>
-        Olá 👋
+        Olá, Carlos Felipe Araújo 👋
       </Text>
       <Text style={{ fontSize: 14, opacity: 0.8, color: onSurface }}>
         Ofertas e novidades de hoje
