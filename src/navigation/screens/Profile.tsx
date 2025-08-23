@@ -13,6 +13,7 @@ import { ThemedButton } from "../../components/ThemedButton";
 import { useThemeColor } from "../../hooks/useThemeColor";
 import { Icon } from "../../components/Icon";
 import { useCart } from "../../state/cart";
+import { useFavorites } from "../../state/favorites";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 export function Profile() {
@@ -39,6 +40,8 @@ export function Profile() {
     () => Object.values(qty).reduce((a, b) => a + b, 0),
     [qty],
   );
+
+  const { count: favoritesCount } = useFavorites();
 
   return (
     <ThemedView style={[styles.container, { backgroundColor: bg }]}>
@@ -83,7 +86,7 @@ export function Profile() {
           <View style={styles.statsRow}>
             <Stat label="Pedidos" value="12" />
             <Divider />
-            <Stat label="Favoritos" value="5" />
+            <Stat label="Favoritos" value={String(favoritesCount)} />
             <Divider />
             <Stat label="Avaliações" value="3" />
           </View>
