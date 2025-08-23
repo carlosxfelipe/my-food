@@ -23,6 +23,7 @@ export type ThemeColorName =
   | "header"
   | "bottom"
   | "placeholder"
+  | "inputBackground"
   | "star";
 
 const defaultColors: Record<ThemeColorName, { light: string; dark: string }> = {
@@ -93,6 +94,10 @@ const defaultColors: Record<ThemeColorName, { light: string; dark: string }> = {
   placeholder: {
     light: "#00000066",
     dark: "#ffffff99",
+  },
+  inputBackground: {
+    light: "#00000008",
+    dark: "#ffffff0f",
   },
   star: {
     light: "#FFD700",

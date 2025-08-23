@@ -15,10 +15,11 @@ export function AppHeader(props: HeaderProps) {
   const back = "back" in props
     ? (props as NativeStackHeaderProps).back
     : undefined;
-  const { colors, dark } = useTheme();
+  const { colors } = useTheme();
   const placeholder = useThemeColor("placeholder");
   const textColor = useThemeColor("text");
-  const tint = useThemeColor("text");
+  const iconColor = useThemeColor("text");
+  const searchBgColor = useThemeColor("inputBackground")
 
   // const cartCount = Number((options as any)?.cartCount) || 0;
   const { count: cartCount } = useCart();
@@ -51,7 +52,7 @@ export function AppHeader(props: HeaderProps) {
               <Icon
                 name="chevron-left"
                 size={28}
-                color={tint}
+                color={iconColor}
                 family="material-community"
               />
             </Pressable>
@@ -62,7 +63,7 @@ export function AppHeader(props: HeaderProps) {
         style={[
           styles.search,
           {
-            backgroundColor: dark ? "#ffffff0f" : "#00000008",
+            backgroundColor: searchBgColor,
             borderColor: colors.border,
           },
         ]}
@@ -70,7 +71,7 @@ export function AppHeader(props: HeaderProps) {
         <Icon
           name="magnify"
           size={20}
-          color={tint}
+          color={iconColor}
           family="material-community"
         />
         <TextInput
@@ -93,7 +94,7 @@ export function AppHeader(props: HeaderProps) {
         <BadgeIcon
           icon="cart-outline"
           count={cartCount}
-          tint={tint}
+          tint={iconColor}
           onPress={() => {
             const root = navigation.getParent?.() ?? navigation; // quando estamos no Stack
             root.navigate("HomeTabs" as never, { screen: "Orders" } as never);
@@ -102,7 +103,7 @@ export function AppHeader(props: HeaderProps) {
         <BadgeIcon
           icon="bell-outline"
           count={bellCount}
-          tint={tint}
+          tint={iconColor}
           onPress={() => {}}
         />
       </View>
