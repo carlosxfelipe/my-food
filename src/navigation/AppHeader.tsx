@@ -50,7 +50,7 @@ export function AppHeader(props: HeaderProps) {
   const showSearch = typeof (options as any)?.onChangeQuery === "function" ||
     typeof (options as any)?.onSearch === "function";
 
-  const LEFT_WIDTH = 40;
+  const [actionsWidth, setActionsWidth] = useState(0);
 
   return (
     <SafeAreaView
@@ -61,7 +61,7 @@ export function AppHeader(props: HeaderProps) {
       ]}
     >
       <View
-        style={[styles.left, !back && { width: showSearch ? 0 : LEFT_WIDTH }]}
+        style={[styles.left, !back && { width: showSearch ? 0 : actionsWidth }]}
       >
         {back && (
           <Pressable onPress={navigation.goBack} hitSlop={8}>
@@ -136,7 +136,10 @@ export function AppHeader(props: HeaderProps) {
           </View>
         )}
 
-      <View style={styles.actions}>
+      <View
+        style={styles.actions}
+        onLayout={(e) => setActionsWidth(e.nativeEvent.layout.width)}
+      >
         <BadgeIcon
           icon="cart-outline"
           count={cartCount}

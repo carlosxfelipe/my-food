@@ -9,6 +9,7 @@ import { Home } from "./screens/Home";
 import { Orders } from "./screens/Orders";
 import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
+import { Favorites } from "./screens/Favorites";
 import { NotFound } from "./screens/NotFound";
 import { BottomTabAdapter } from "./BottomTabAdapter";
 import { AppHeader } from "./AppHeader";
@@ -40,6 +41,14 @@ const HomeTabs = createBottomTabNavigator({
     //     tabBarIconNameInactive: "cog-outline",
     //   } as any,
     // },
+    Favorites: {
+      screen: Favorites,
+      options: {
+        title: "Favoritos",
+        tabBarIconNameActive: "heart",
+        tabBarIconNameInactive: "heart-outline",
+      } as any,
+    },
     Profile: {
       screen: Profile,
       options: {
