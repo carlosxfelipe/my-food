@@ -22,6 +22,7 @@ export type ThemeColorName =
   | "inverseOnSurface"
   | "header"
   | "bottom"
+  | "placeholder"
   | "star";
 
 const defaultColors: Record<ThemeColorName, { light: string; dark: string }> = {
@@ -88,6 +89,10 @@ const defaultColors: Record<ThemeColorName, { light: string; dark: string }> = {
   bottom: {
     light: "#FFFFFF",
     dark: "#1C1B1F",
+  },
+  placeholder: {
+    light: "#00000066",
+    dark: "#ffffff99",
   },
   star: {
     light: "#FFD700",

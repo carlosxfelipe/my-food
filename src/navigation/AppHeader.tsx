@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
@@ -6,6 +6,7 @@ import type { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import type { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Icon } from "../components/Icon";
 import { useCart } from "../state/cart";
+import { useThemeColor } from "../hooks/useThemeColor";
 
 type HeaderProps = NativeStackHeaderProps | BottomTabHeaderProps;
 
@@ -15,8 +16,9 @@ export function AppHeader(props: HeaderProps) {
     ? (props as NativeStackHeaderProps).back
     : undefined;
   const { colors, dark } = useTheme();
-  const tint = dark ? "#fff" : "#000";
-  const placeholder = useMemo(() => (dark ? "#ffffff99" : "#00000066"), [dark]);
+  const placeholder = useThemeColor("placeholder");
+  const textColor = useThemeColor("text");
+  const tint = useThemeColor("text");
 
   // const cartCount = Number((options as any)?.cartCount) || 0;
   const { count: cartCount } = useCart();
@@ -74,7 +76,7 @@ export function AppHeader(props: HeaderProps) {
         <TextInput
           placeholder="Buscar"
           placeholderTextColor={placeholder}
-          style={styles.input}
+          style={[styles.input, { color: textColor }]}
           returnKeyType="search"
           onChangeText={handleChangeText}
           onSubmitEditing={(e) => {

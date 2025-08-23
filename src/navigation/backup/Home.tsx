@@ -24,12 +24,14 @@ export function Home() {
       </Button> */
       }
 
-      <ThemedButton
+      {
+        /* <ThemedButton
         title="Ir para Perfil"
         onPress={() =>
           navigation.navigate("Profile", { user: "carlos felipe" })}
         buttonStyle={styles.button}
-      />
+      /> */
+      }
 
       {
         /* <Button screen="Settings" style={styles.button}>
