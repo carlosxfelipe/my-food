@@ -136,9 +136,22 @@ export function Home() {
         }
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <ThemedText style={{ marginTop: 24 }}>
-            Nenhum produto encontrado para “{q}”.
-          </ThemedText>
+          <View
+            style={{ flex: 1, alignItems: "center", marginTop: 32 }}
+          >
+            <Icon
+              name="cookie-off"
+              size={48}
+              color={textColor}
+              family="material-community"
+            />
+            <ThemedText
+              type="defaultSemiBold"
+              style={{ marginTop: 16, textAlign: "center" }}
+            >
+              Nenhum produto encontrado para “{q}”.
+            </ThemedText>
+          </View>
         }
       />
 
