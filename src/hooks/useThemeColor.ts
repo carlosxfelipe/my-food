@@ -18,6 +18,10 @@ export type ThemeColorName =
   | "outline"
   | "error"
   | "onError"
+  | "warning"
+  | "onWarning"
+  | "success"
+  | "onSuccess"
   | "inverseSurface"
   | "inverseOnSurface"
   | "header"
@@ -74,6 +78,22 @@ const defaultColors: Record<ThemeColorName, { light: string; dark: string }> = {
   onError: {
     light: "#FFFFFF",
     dark: "#601410",
+  },
+  warning: {
+    light: "#E65100",
+    dark: "#FFB74D",
+  },
+  onWarning: {
+    light: "#FFFFFF",
+    dark: "#3D1E00",
+  },
+  success: {
+    light: "#2E7D32",
+    dark: "#A5D6A7",
+  },
+  onSuccess: {
+    light: "#FFFFFF",
+    dark: "#0B2312",
   },
   inverseSurface: {
     light: "#313033",
