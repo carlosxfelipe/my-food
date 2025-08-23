@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
@@ -19,22 +19,31 @@ export function AppHeader(props: HeaderProps) {
   const placeholder = useThemeColor("placeholder");
   const textColor = useThemeColor("text");
   const iconColor = useThemeColor("text");
-  const searchBgColor = useThemeColor("inputBackground")
+  const searchBgColor = useThemeColor("inputBackground");
 
   // const cartCount = Number((options as any)?.cartCount) || 0;
   const { count: cartCount } = useCart();
   const bellCount = Number((options as any)?.bellCount) || 0;
 
+  const [query, setQuery] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const debounceDelay = 400;
 
   function handleChangeText(text: string) {
+    setQuery(text);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       if (typeof (options as any)?.onChangeQuery === "function") {
         (options as any).onChangeQuery(text);
       }
     }, debounceDelay);
+  }
+
+  function handleClear() {
+    setQuery("");
+    if (typeof (options as any)?.onChangeQuery === "function") {
+      (options as any).onChangeQuery("");
+    }
   }
 
   return (
@@ -46,17 +55,16 @@ export function AppHeader(props: HeaderProps) {
       ]}
     >
       <View style={[styles.left, !back && { width: 0 }]}>
-        {back &&
-          (
-            <Pressable onPress={navigation.goBack} hitSlop={8}>
-              <Icon
-                name="chevron-left"
-                size={28}
-                color={iconColor}
-                family="material-community"
-              />
-            </Pressable>
-          )}
+        {back && (
+          <Pressable onPress={navigation.goBack} hitSlop={8}>
+            <Icon
+              name="chevron-left"
+              size={28}
+              color={iconColor}
+              family="material-community"
+            />
+          </Pressable>
+        )}
       </View>
 
       <View
@@ -75,6 +83,7 @@ export function AppHeader(props: HeaderProps) {
           family="material-community"
         />
         <TextInput
+          value={query}
           placeholder="Buscar"
           placeholderTextColor={placeholder}
           style={[styles.input, { color: textColor }]}
@@ -88,6 +97,16 @@ export function AppHeader(props: HeaderProps) {
             }
           }}
         />
+        {query.length > 0 && (
+          <Pressable onPress={handleClear} hitSlop={8}>
+            <Icon
+              name="close"
+              size={20}
+              color={iconColor}
+              family="material-community"
+            />
+          </Pressable>
+        )}
       </View>
 
       <View style={styles.actions}>
@@ -96,7 +115,7 @@ export function AppHeader(props: HeaderProps) {
           count={cartCount}
           tint={iconColor}
           onPress={() => {
-            const root = navigation.getParent?.() ?? navigation; // quando estamos no Stack
+            const root = navigation.getParent?.() ?? navigation;
             root.navigate("HomeTabs" as never, { screen: "Orders" } as never);
           }}
         />
