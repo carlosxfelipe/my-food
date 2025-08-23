@@ -1,5 +1,12 @@
 import React, { useLayoutEffect, useMemo } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {
   NavigationProp,
   StaticScreenProps,
@@ -9,6 +16,7 @@ import { useThemeColor } from "../../hooks/useThemeColor";
 import { Icon } from "../../components/Icon";
 import { MOCK_PRODUCTS, Product } from "../../data/products";
 import { BRL } from "../../utils/format";
+import { useFavorites } from "../../state/favorites";
 
 type Props = StaticScreenProps<{
   id: string;
@@ -31,6 +39,9 @@ export function ProductDetails({ route }: Props) {
   const navigation = useNavigation<
     NavigationProp<ReactNavigation.RootParamList, "ProductDetails">
   >();
+
+  const { has, toggle } = useFavorites();
+  const isFavorite = product ? has(product.id) : false;
 
   useLayoutEffect(() => {
     if (product) {
@@ -59,11 +70,30 @@ export function ProductDetails({ route }: Props) {
           style={styles.image}
           resizeMode="cover"
         />
+
+        <Pressable
+          onPress={() => toggle(product.id)}
+          hitSlop={8}
+          style={styles.favBtn}
+        >
+          <Icon
+            name={isFavorite ? "heart" : "heart-outline"}
+            family="material-community"
+            size={22}
+            color={isFavorite ? primary : "#ffffff"}
+          />
+        </Pressable>
+
         {!!product.tags?.length && (
           <View style={styles.tagsRow}>
             {product.tags.map((t) => (
               <View key={t} style={[styles.tag, { backgroundColor: primary }]}>
-                <Text style={[styles.tagText, { color: onPrimary }]}>{t}</Text>
+                <Text
+                  style={[styles.tagText, { color: onPrimary }]}
+                  numberOfLines={1}
+                >
+                  {t}
+                </Text>
               </View>
             ))}
           </View>
@@ -121,13 +151,26 @@ export function ProductDetails({ route }: Props) {
 const styles = StyleSheet.create({
   container: { padding: 16, gap: 12 },
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  imageWrap: { borderRadius: 14, overflow: "hidden" },
+  imageWrap: { borderRadius: 14, overflow: "hidden", position: "relative" },
   image: { width: "100%", aspectRatio: 4 / 3 },
+  favBtn: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#00000066",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   tagsRow: {
     position: "absolute",
     top: 8,
     left: 8,
+    right: 56,
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 6,
   },
   tag: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 999 },
