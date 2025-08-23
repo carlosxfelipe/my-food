@@ -50,6 +50,8 @@ export function AppHeader(props: HeaderProps) {
   const showSearch = typeof (options as any)?.onChangeQuery === "function" ||
     typeof (options as any)?.onSearch === "function";
 
+  const LEFT_WIDTH = 40;
+
   return (
     <SafeAreaView
       edges={["top"]}
@@ -58,7 +60,9 @@ export function AppHeader(props: HeaderProps) {
         { backgroundColor: colors.card, borderBottomColor: colors.border },
       ]}
     >
-      <View style={[styles.left, !back && { width: 0 }]}>
+      <View
+        style={[styles.left, !back && { width: showSearch ? 0 : LEFT_WIDTH }]}
+      >
         {back && (
           <Pressable onPress={navigation.goBack} hitSlop={8}>
             <Icon
@@ -68,6 +72,11 @@ export function AppHeader(props: HeaderProps) {
               family="material-community"
             />
           </Pressable>
+        )}
+
+        {!back && !showSearch && (
+          // placeholder só quando NÃO tem seta E NÃO tem busca
+          <View style={{ width: 22, height: 22 }} />
         )}
       </View>
 
