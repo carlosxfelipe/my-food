@@ -74,13 +74,13 @@ export function ProductDetails({ route }: Props) {
         <Pressable
           onPress={() => toggle(product.id)}
           hitSlop={8}
-          style={styles.favBtn}
+          style={[styles.favBtn, { backgroundColor: primary }]}
         >
           <Icon
             name={isFavorite ? "heart" : "heart-outline"}
             family="material-community"
             size={22}
-            color={isFavorite ? primary : "#ffffff"}
+            color={onPrimary}
           />
         </Pressable>
 
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#00000066",
     alignItems: "center",
     justifyContent: "center",
   },
