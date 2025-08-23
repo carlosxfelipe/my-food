@@ -7,6 +7,7 @@ import type { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Icon } from "../components/Icon";
 import { useCart } from "../state/cart";
 import { useThemeColor } from "../hooks/useThemeColor";
+import { ThemedText } from "../components/ThemedText";
 
 type HeaderProps = NativeStackHeaderProps | BottomTabHeaderProps;
 
@@ -46,6 +47,9 @@ export function AppHeader(props: HeaderProps) {
     }
   }
 
+  const showSearch = typeof (options as any)?.onChangeQuery === "function" ||
+    typeof (options as any)?.onSearch === "function";
+
   return (
     <SafeAreaView
       edges={["top"]}
@@ -67,47 +71,61 @@ export function AppHeader(props: HeaderProps) {
         )}
       </View>
 
-      <View
-        style={[
-          styles.search,
-          {
-            backgroundColor: searchBgColor,
-            borderColor: colors.border,
-          },
-        ]}
-      >
-        <Icon
-          name="magnify"
-          size={20}
-          color={iconColor}
-          family="material-community"
-        />
-        <TextInput
-          value={query}
-          placeholder="Buscar"
-          placeholderTextColor={placeholder}
-          style={[styles.input, { color: textColor }]}
-          returnKeyType="search"
-          onChangeText={handleChangeText}
-          onSubmitEditing={(e) => {
-            const q = e.nativeEvent.text?.trim();
-            if (!q) return;
-            if (typeof (options as any)?.onSearch === "function") {
-              (options as any).onSearch(q);
-            }
-          }}
-        />
-        {query.length > 0 && (
-          <Pressable onPress={handleClear} hitSlop={8}>
+      {showSearch
+        ? (
+          <View
+            style={[
+              styles.search,
+              {
+                backgroundColor: searchBgColor,
+                borderColor: colors.border,
+              },
+            ]}
+          >
             <Icon
-              name="close"
+              name="magnify"
               size={20}
               color={iconColor}
               family="material-community"
             />
-          </Pressable>
+            <TextInput
+              value={query}
+              placeholder="Buscar"
+              placeholderTextColor={placeholder}
+              style={[styles.input, { color: textColor }]}
+              returnKeyType="search"
+              onChangeText={handleChangeText}
+              onSubmitEditing={(e) => {
+                const q = e.nativeEvent.text?.trim();
+                if (!q) return;
+                if (typeof (options as any)?.onSearch === "function") {
+                  (options as any).onSearch(q);
+                }
+              }}
+            />
+            {query.length > 0 && (
+              <Pressable onPress={handleClear} hitSlop={8}>
+                <Icon
+                  name="close"
+                  size={20}
+                  color={iconColor}
+                  family="material-community"
+                />
+              </Pressable>
+            )}
+          </View>
+        )
+        : (
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <ThemedText
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              type="subtitle"
+            >
+              {options?.title}
+            </ThemedText>
+          </View>
         )}
-      </View>
 
       <View style={styles.actions}>
         <BadgeIcon
