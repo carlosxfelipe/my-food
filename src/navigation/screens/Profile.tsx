@@ -29,7 +29,7 @@ export function Profile() {
 
   const user = {
     name: "Carlos Felipe Araújo",
-    username: "carlosxfelipe",
+    email: "carlosxfelipe@gmail.com",
     avatar:
       "https://avatars.githubusercontent.com/u/85801709?s=400&u=01cce0318ea853ce1a133699bc6b2af1919094d6&v=4",
   };
@@ -60,8 +60,8 @@ export function Profile() {
               <ThemedText style={[styles.name, { color: onSurface }]}>
                 {user.name}
               </ThemedText>
-              <ThemedText style={[styles.username, { color: outline }]}>
-                @{user.username}
+              <ThemedText style={[styles.email, { color: outline }]}>
+                {user.email}
               </ThemedText>
             </View>
             <ThemedButton
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   avatarWrap: { width: 64, height: 64, borderRadius: 32, overflow: "hidden" },
   avatar: { width: "100%", height: "100%" },
   name: { fontSize: 18, fontWeight: "800" },
-  username: { fontSize: 12, marginTop: 2 },
+  email: { fontSize: 12, marginTop: 2 },
   statsRow: {
     flexDirection: "row",
     alignItems: "center",
