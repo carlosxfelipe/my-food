@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { Platform, StatusBar } from "react-native";
-import { ThemeProvider, useTheme } from "./theme/ThemeContext";
+import { useTheme } from "./theme/ThemeContext";
 import { Navigation } from "./navigation";
 import { DarkTheme, DefaultTheme, Theme } from "@react-navigation/native";
 import SystemNavigationBar from "react-native-system-navigation-bar";
-import { CartProvider } from "./state/cart";
-import { FavoritesProvider } from "./state/favorites";
+import { AppProviders } from "./providers";
 
 function AppWithProviders() {
   const { theme } = useTheme();
@@ -45,14 +44,22 @@ function AppWithProviders() {
   );
 }
 
+// export function App() {
+//   return (
+//     <ThemeProvider disableDarkMode={false}>
+//       <CartProvider>
+//         <FavoritesProvider>
+//           <AppWithProviders />
+//         </FavoritesProvider>
+//       </CartProvider>
+//     </ThemeProvider>
+//   );
+// }
+
 export function App() {
   return (
-    <ThemeProvider disableDarkMode={false}>
-      <CartProvider>
-        <FavoritesProvider>
-          <AppWithProviders />
-        </FavoritesProvider>
-      </CartProvider>
-    </ThemeProvider>
+    <AppProviders>
+      <AppWithProviders />
+    </AppProviders>
   );
 }
