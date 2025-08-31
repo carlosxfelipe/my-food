@@ -128,8 +128,17 @@ export function Profile() {
 
           <ThemedButton
             title="Sair da conta"
+            iconLeft={
+              <Icon
+                name="logout"
+                family="material-community"
+                size={18}
+                color={onPrimary}
+              />
+            }
             onPress={() => Alert.alert("Logout", "Você saiu da conta.")}
-            buttonStyle={{ marginTop: 12 }}
+            buttonStyle={{ marginTop: 12, backgroundColor: primary }}
+            textStyle={{ color: onPrimary }}
           />
         </View>
 

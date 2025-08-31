@@ -17,6 +17,7 @@ import { MOCK_PRODUCTS, Product } from "../../data/products";
 import { useFavorites } from "../../state/favorites";
 import { useCart } from "../../state/cart";
 import { BRL } from "../../utils/format";
+import { ThemedButton } from "../../components/ThemedButton";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -100,6 +101,14 @@ export function Favorites() {
         <ThemedText style={{ marginTop: 6, textAlign: "center", opacity: 0.9 }}>
           Toque no coração de um produto para favoritá-lo.
         </ThemedText>
+        <ThemedButton
+          title="Explorar produtos"
+          onPress={() => {
+            const root = (navigation as any).getParent?.() ?? navigation;
+            root.navigate("HomeTabs" as never, { screen: "Home" } as never);
+          }}
+          buttonStyle={{ marginTop: 16, alignSelf: "center" }}
+        />
       </ThemedView>
     );
   }

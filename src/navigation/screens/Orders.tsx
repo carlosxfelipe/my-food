@@ -16,6 +16,7 @@ import { MOCK_PRODUCTS, Product } from "../../data/products";
 import { useCart } from "../../state/cart";
 import { BRL } from "../../utils/format";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Icon } from "../../components/Icon";
 
 type CartItem = Product & { quantity: number };
 
@@ -72,7 +73,13 @@ export function Orders() {
   if (items.length === 0) {
     return (
       <ThemedView style={[styles.emptyWrap, { backgroundColor: bg }]}>
-        <ThemedText type="title" style={{ textAlign: "center" }}>
+        <Icon
+          name="cart-off"
+          family="material-community"
+          size={48}
+          color={outline}
+        />
+        <ThemedText type="title" style={{ marginTop: 8, textAlign: "center" }}>
           Seu carrinho está vazio
         </ThemedText>
         <ThemedText style={{ marginTop: 8, textAlign: "center" }}>
@@ -102,17 +109,21 @@ export function Orders() {
         ItemSeparatorComponent={ItemSeparator}
         showsVerticalScrollIndicator={false}
       />
-      <View style={{marginTop: 100}} />
+      <View style={{ marginTop: 100 }} />
       <View
         style={[
           styles.checkoutBar,
           { backgroundColor: card, borderColor: outline },
         ]}
-        accessibilityLabel={`${totalLabel} do carrinho ${BRL.format(totalValue)}`}
+        accessibilityLabel={`${totalLabel} do carrinho ${
+          BRL.format(totalValue)
+        }`}
       >
         <View style={{ flex: 1 }}>
           <View style={styles.totalsRow}>
-            <Text style={[styles.totalLabel, { color: text }]}>{totalLabel}</Text>
+            <Text style={[styles.totalLabel, { color: text }]}>
+              {totalLabel}
+            </Text>
             <Text style={[styles.totalValue, { color: text }]}>
               {BRL.format(totalValue)}
             </Text>
