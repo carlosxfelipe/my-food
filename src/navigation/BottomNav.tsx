@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   iconLine: {
     height: 32,
-    minWidth: 44,
+    minWidth: 64,
     paddingHorizontal: 12,
     borderRadius: 16,
     alignItems: "center",

@@ -47,6 +47,15 @@ export function Orders() {
     [items],
   );
 
+  const shipping = 10;
+  const taxes = 0;
+  const discount = 0;
+  const extras = shipping + taxes - discount;
+  const hasExtras = extras !== 0;
+  const finalTotal = subtotal + extras;
+  const totalLabel = hasExtras ? "Total" : "Subtotal";
+  const totalValue = hasExtras ? finalTotal : subtotal;
+
   const renderItem: ListRenderItem<CartItem> = ({ item }) => (
     <ProductCard
       product={item}
@@ -93,32 +102,71 @@ export function Orders() {
         ItemSeparatorComponent={ItemSeparator}
         showsVerticalScrollIndicator={false}
       />
-
+      <View style={{marginTop: 100}} />
       <View
         style={[
           styles.checkoutBar,
           { backgroundColor: card, borderColor: outline },
         ]}
-        accessibilityLabel={`Total do carrinho ${BRL.format(subtotal)}`}
+        accessibilityLabel={`${totalLabel} do carrinho ${BRL.format(totalValue)}`}
       >
-        <View style={styles.totals}>
-          <Text style={[styles.totalLabel, { color: text }]}>Total</Text>
-          <Text style={[styles.totalValue, { color: text }]}>
-            {BRL.format(subtotal)}
-          </Text>
+        <View style={{ flex: 1 }}>
+          <View style={styles.totalsRow}>
+            <Text style={[styles.totalLabel, { color: text }]}>{totalLabel}</Text>
+            <Text style={[styles.totalValue, { color: text }]}>
+              {BRL.format(totalValue)}
+            </Text>
 
-          <Pressable onPress={clear} hitSlop={8} style={{ marginLeft: 12 }}>
-            <Text style={[styles.clearText, { color: outline }]}>Limpar</Text>
-          </Pressable>
+            <Pressable onPress={clear} hitSlop={8} style={{ marginLeft: 12 }}>
+              <Text style={[styles.clearText, { color: outline }]}>Limpar</Text>
+            </Pressable>
+          </View>
+
+          {hasExtras && (
+            <View style={[styles.breakdown, { borderColor: outline }]}>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: outline }]}>
+                  Subtotal
+                </Text>
+                <Text style={[styles.breakdownValue, { color: text }]}>
+                  {BRL.format(subtotal)}
+                </Text>
+              </View>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: outline }]}>
+                  Frete
+                </Text>
+                <Text style={[styles.breakdownValue, { color: text }]}>
+                  {BRL.format(shipping)}
+                </Text>
+              </View>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: outline }]}>
+                  Impostos
+                </Text>
+                <Text style={[styles.breakdownValue, { color: text }]}>
+                  {BRL.format(taxes)}
+                </Text>
+              </View>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: outline }]}>
+                  Desconto
+                </Text>
+                <Text style={[styles.breakdownValue, { color: text }]}>
+                  -{BRL.format(discount)}
+                </Text>
+              </View>
+            </View>
+          )}
+
+          <ThemedButton
+            title={`Finalizar pedido (${items.length})`}
+            onPress={() => {
+              console.log("checkout");
+            }}
+            buttonStyle={{ marginTop: 12, width: "100%" }}
+          />
         </View>
-
-        <ThemedButton
-          title={`Finalizar pedido (${items.length})`}
-          onPress={() => {
-            console.log("checkout");
-          }}
-          buttonStyle={{ paddingHorizontal: 18 }}
-        />
       </View>
     </View>
   );
@@ -142,14 +190,22 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 12,
     paddingVertical: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 12,
   },
-  totals: { flexDirection: "row", alignItems: "center" },
+  totalsRow: { flexDirection: "row", alignItems: "center" },
   totalLabel: { fontSize: 14, fontWeight: "600", marginRight: 8 },
   totalValue: { fontSize: 16, fontWeight: "800" },
   clearText: { fontSize: 12 },
+  breakdown: {
+    marginTop: 6,
+    paddingTop: 6,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  breakdownRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 2,
+  },
+  breakdownLabel: { fontSize: 12 },
+  breakdownValue: { fontSize: 12, fontWeight: "700" },
   separator: { height: 12 },
 });
