@@ -175,4 +175,17 @@ export const MOCK_PRODUCTS: Product[] = [
     stock: 9,
     tags: ["torta", "bolo", "gelada"],
   },
+  {
+    id: "p-130",
+    name: "Cookies de Aveia e Uva-Passa 150g",
+    sku: "COO-AVE-150",
+    description:
+      "Cookies crocantes com aveia integral e uva-passa selecionada.",
+    price: 16.9,
+    image:
+      "https://images.pexels.com/photos/890577/pexels-photo-890577.jpeg?auto=compress&cs=tinysrgb&w=400",
+    rating: 4.2,
+    stock: 22,
+    tags: ["doce", "saudável"],
+  },
 ];
