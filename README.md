@@ -96,8 +96,16 @@ npm run ios
 yarn ios
 ```
 
-Se tudo estiver configurado corretamente, você verá seu novo aplicativo rodando
-no Emulador Android, no Simulador iOS ou no seu dispositivo conectado.
+## Licença
 
-Essa é uma forma de rodar seu aplicativo --- você também pode compilá-lo
-diretamente no Android Studio ou no Xcode.
+Este projeto é licenciado sob os termos da **GNU General Public License v3.0 or
+later**.
+
+Você pode ver a licença completa em [`LICENSE`](./LICENSE) ou acessá-la
+diretamente [aqui](https://www.gnu.org/licenses/gpl-3.0.txt).
+
+---
+
+> Projeto desenvolvido com ❤️ por
+> [@carlosxfelipe](https://github.com/carlosxfelipe). Contribuições são
+> bem-vindas!
