@@ -2,6 +2,14 @@ Este é o projeto **My Food**, desenvolvido em
 [**React Native**](https://reactnative.dev), utilizando
 [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+<p align="center">
+  <img src="./preview/MockupViews_1x_PNG_20250902_225.png" alt="Preview do app My Food no modo claro" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./preview/MockupViews_1x_PNG_20250902_761.png" alt="Preview do app My Food no modo escuro" width="100%" />
+</p>
+
 # Primeiros Passos
 
 > **Nota**: Certifique-se de ter concluído o guia
