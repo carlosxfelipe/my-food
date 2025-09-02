@@ -16,7 +16,26 @@ Este é o projeto **My Food**, desenvolvido em
 > [Configurar seu Ambiente](https://reactnative.dev/docs/set-up-your-environment)
 > antes de prosseguir.
 
-## Etapa 1: Iniciar o Metro
+## Etapa 1: Clonar o projeto e instalar dependências
+
+Clone este repositório e entre na pasta do projeto:
+
+```sh
+git clone https://github.com/carlosxfelipe/my-food.git
+cd my-food
+```
+
+Depois, instale as dependências do projeto:
+
+```sh
+# Usando npm
+npm install
+
+# OU usando Yarn
+yarn install
+```
+
+## Etapa 2: Iniciar o Metro
 
 Primeiro, você precisará executar o **Metro**, a ferramenta de build JavaScript
 para React Native.
@@ -32,7 +51,7 @@ npm start
 yarn start
 ```
 
-## Etapa 2: Construir e rodar seu app
+## Etapa 3: Construir e rodar seu app
 
 Com o Metro em execução, abra uma nova janela/aba de terminal a partir da raiz
 do seu projeto React Native e use um dos seguintes comandos para compilar e
