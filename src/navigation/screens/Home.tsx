@@ -9,6 +9,7 @@ import { HomeHeader } from "../../components/HomeHeader";
 import { MOCK_PRODUCTS, Product } from "../../data/products";
 import { BRL } from "../../utils/format";
 import { useCart } from "../../state/cart";
+import { ProductGridSkeleton } from "../../components/ProductGridSkeleton";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -21,6 +22,8 @@ export function Home() {
   const [rawQ, setRawQ] = useState("");
   const [q, setQ] = useState("");
   const [tag, setTag] = useState<string | undefined>(undefined);
+  const DEBUG_SKELETON = false;
+  const [loading, setLoading] = useState(true);
 
   const { qty, add, inc, dec } = useCart();
 
@@ -51,11 +54,25 @@ export function Home() {
     };
   }, [navigation, qty]);
 
-  // debounce: espera 300ms antes de aplicar no filtro real
   useEffect(() => {
-    const id = setTimeout(() => setQ(rawQ), 300);
+    const firstPaint = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(firstPaint);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const id = setTimeout(() => {
+      setQ(rawQ);
+      setLoading(false);
+    }, 300);
     return () => clearTimeout(id);
   }, [rawQ]);
+
+  useEffect(() => {
+    setLoading(true);
+    const id = setTimeout(() => setLoading(false), 250);
+    return () => clearTimeout(id);
+  }, [tag]);
 
   const data = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -108,52 +125,61 @@ export function Home() {
     [],
   );
 
+  const header = (
+    <HomeHeader
+      chips={chips}
+      activeTag={tag}
+      onPick={(picked) => {
+        setRawQ("");
+        setQ("");
+        setTag(picked);
+      }}
+      onClear={() => {
+        setTag(undefined);
+        setRawQ("");
+        setQ("");
+      }}
+    />
+  );
+
   return (
     <View style={[styles.container, { backgroundColor: bg }]}>
-      <FlatList
-        contentContainerStyle={styles.listContent}
-        data={data}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        numColumns={2}
-        columnWrapperStyle={styles.columns}
-        ItemSeparatorComponent={ItemSeparator}
-        ListHeaderComponent={
-          <HomeHeader
-            chips={chips}
-            activeTag={tag}
-            onPick={(picked) => {
-              setRawQ("");
-              setQ("");
-              setTag(picked);
-            }}
-            onClear={() => {
-              setTag(undefined);
-              setRawQ("");
-              setQ("");
-            }}
+      {DEBUG_SKELETON || loading
+        ? (
+          <>
+            {header}
+            <ProductGridSkeleton />
+          </>
+        )
+        : (
+          <FlatList
+            contentContainerStyle={styles.listContent}
+            data={data}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            numColumns={2}
+            columnWrapperStyle={styles.columns}
+            ItemSeparatorComponent={ItemSeparator}
+            ListHeaderComponent={header}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <View style={{ flex: 1, alignItems: "center", marginTop: 32 }}>
+                <Icon
+                  name="cookie-off"
+                  size={48}
+                  color={textColor}
+                  family="material-community"
+                />
+                <ThemedText
+                  type="defaultSemiBold"
+                  style={{ marginTop: 16, textAlign: "center" }}
+                >
+                  Nenhum produto encontrado para “{q}”.
+                </ThemedText>
+              </View>
+            }
           />
-        }
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <View
-            style={{ flex: 1, alignItems: "center", marginTop: 32 }}
-          >
-            <Icon
-              name="cookie-off"
-              size={48}
-              color={textColor}
-              family="material-community"
-            />
-            <ThemedText
-              type="defaultSemiBold"
-              style={{ marginTop: 16, textAlign: "center" }}
-            >
-              Nenhum produto encontrado para “{q}”.
-            </ThemedText>
-          </View>
-        }
-      />
+        )}
 
       <View
         style={[styles.cartBar, {
