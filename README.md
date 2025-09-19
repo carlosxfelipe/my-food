@@ -28,30 +28,11 @@ cd my-food
 Depois, instale as dependências do projeto:
 
 ```sh
-# Usando npm
-npm install
-
-# OU usando Yarn
-yarn install
+# Usando pnpm
+pnpm install
 ```
 
-## Etapa 2: Iniciar o Metro
-
-Primeiro, você precisará executar o **Metro**, a ferramenta de build JavaScript
-para React Native.
-
-Para iniciar o servidor Metro, execute o seguinte comando a partir da raiz do
-seu projeto React Native:
-
-```sh
-# Usando npm
-npm start
-
-# OU usando Yarn
-yarn start
-```
-
-## Etapa 3: Construir e rodar seu app
+## Etapa 2: Construir e rodar seu app
 
 Com o Metro em execução, abra uma nova janela/aba de terminal a partir da raiz
 do seu projeto React Native e use um dos seguintes comandos para compilar e
@@ -60,11 +41,8 @@ rodar seu aplicativo Android ou iOS:
 ### Android
 
 ```sh
-# Usando npm
-npm run android
-
-# OU usando Yarn
-yarn android
+# Usando pnpm
+pnpm run android
 ```
 
 ### iOS
@@ -72,28 +50,17 @@ yarn android
 No iOS, lembre-se de instalar as dependências do CocoaPods (isso só precisa ser
 feito no primeiro clone ou após atualizar dependências nativas).
 
-Na primeira vez que você criar um novo projeto, execute o bundler do Ruby para
-instalar o próprio CocoaPods:
+Na primeira vez que você criar um novo projeto, execute:
 
 ```sh
-bundle install
+cd ios && pod install && cd ..
 ```
 
-Depois, e sempre que atualizar suas dependências nativas, execute:
+Depois rode:
 
 ```sh
-bundle exec pod install
-```
-
-Para mais informações, consulte o
-[guia de introdução ao CocoaPods](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Usando npm
-npm run ios
-
-# OU usando Yarn
-yarn ios
+# Usando pnpm
+pnpm run ios
 ```
 
 ## Licença
@@ -109,3 +76,7 @@ diretamente [aqui](https://www.gnu.org/licenses/gpl-3.0.txt).
 > Projeto desenvolvido com ❤️ por
 > [@carlosxfelipe](https://github.com/carlosxfelipe). Contribuições são
 > bem-vindas!
+
+```
+
+```
