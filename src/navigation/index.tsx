@@ -1,36 +1,37 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   createStaticNavigation,
   StaticParamList,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HeaderButton, Text } from "@react-navigation/elements";
-import { Home } from "./screens/Home";
-import { Orders } from "./screens/Orders";
-import { Profile } from "./screens/Profile";
-import { Settings } from "./screens/Settings";
-import { Favorites } from "./screens/Favorites";
-import { NotFound } from "./screens/NotFound";
-import { BottomTabAdapter } from "./BottomTabAdapter";
-import { AppHeader } from "./AppHeader";
-import { ProductDetails } from "./screens/ProductDetails";
+} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HeaderButton, Text } from '@react-navigation/elements';
+import { Home } from './screens/Home';
+import { Orders } from './screens/Orders';
+import { Profile } from './screens/Profile';
+import { Settings } from './screens/Settings';
+import { Favorites } from './screens/Favorites';
+import { NotFound } from './screens/NotFound';
+import { BottomTabAdapter } from './BottomTabAdapter';
+import { AppHeader } from './AppHeader';
+import { ProductDetails } from './screens/ProductDetails';
+import { CameraScreen } from './screens/CameraScreen';
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Home: {
       screen: Home,
       options: {
-        title: "Início",
-        tabBarIconNameActive: "home",
-        tabBarIconNameInactive: "home-outline",
+        title: 'Início',
+        tabBarIconNameActive: 'home',
+        tabBarIconNameInactive: 'home-outline',
       } as any,
     },
     Orders: {
       screen: Orders,
       options: {
-        title: "Pedidos",
-        tabBarIconNameActive: "package-variant",
-        tabBarIconNameInactive: "package-variant-closed",
+        title: 'Pedidos',
+        tabBarIconNameActive: 'package-variant',
+        tabBarIconNameInactive: 'package-variant-closed',
       } as any,
     },
     // Settings: {
@@ -44,24 +45,24 @@ const HomeTabs = createBottomTabNavigator({
     Favorites: {
       screen: Favorites,
       options: {
-        title: "Favoritos",
-        tabBarIconNameActive: "heart",
-        tabBarIconNameInactive: "heart-outline",
+        title: 'Favoritos',
+        tabBarIconNameActive: 'heart',
+        tabBarIconNameInactive: 'heart-outline',
       } as any,
     },
     Profile: {
       screen: Profile,
       options: {
-        title: "Perfil",
-        tabBarIconNameActive: "account",
-        tabBarIconNameInactive: "account-outline",
+        title: 'Perfil',
+        tabBarIconNameActive: 'account',
+        tabBarIconNameInactive: 'account-outline',
       } as any,
     },
   },
-  tabBar: (props) => <BottomTabAdapter {...props} />,
+  tabBar: props => <BottomTabAdapter {...props} />,
   // Define o AppHeader como header padrão para todas as telas do TabNavigator
   screenOptions: {
-    header: (props) => <AppHeader {...props} />,
+    header: props => <AppHeader {...props} />,
   },
 });
 
@@ -70,7 +71,7 @@ const RootStack = createNativeStackNavigator({
     HomeTabs: {
       screen: HomeTabs,
       options: {
-        title: "Home",
+        title: 'Home',
         headerShown: false,
       },
     },
@@ -78,25 +79,25 @@ const RootStack = createNativeStackNavigator({
       screen: ProductDetails,
       options: {
         // usa o mesmo header customizado (com seta de voltar)
-        header: (props) => <AppHeader {...props} />,
+        header: props => <AppHeader {...props} />,
       },
       linking: {
-        path: "product/:id",
-        parse: { id: (value) => String(value) },
+        path: 'product/:id',
+        parse: { id: value => String(value) },
       },
     },
     Profile: {
       screen: Profile,
       linking: {
-        path: ":user(@[a-zA-Z0-9-_]+)",
-        parse: { user: (value) => value.replace(/^@/, "") },
-        stringify: { user: (value) => `@${value}` },
+        path: ':user(@[a-zA-Z0-9-_]+)',
+        parse: { user: value => value.replace(/^@/, '') },
+        stringify: { user: value => `@${value}` },
       },
     },
     Settings: {
       screen: Settings,
       options: ({ navigation }) => ({
-        presentation: "modal",
+        presentation: 'modal',
         headerLeft: () => null, // Remove a seta de voltar no modal para exibir apenas o botão "Close"
         headerRight: () => (
           <HeaderButton onPress={navigation.goBack}>
@@ -105,10 +106,17 @@ const RootStack = createNativeStackNavigator({
         ),
       }),
     },
+    CameraScreen: {
+      screen: CameraScreen,
+      options: {
+        title: 'Scanner',
+        header: props => <AppHeader {...props} />,
+      },
+    },
     NotFound: {
       screen: NotFound,
-      options: { title: "404" },
-      linking: { path: "*" },
+      options: { title: '404' },
+      linking: { path: '*' },
     },
   },
 });

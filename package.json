@@ -1,5 +1,5 @@
 {
-  "name": "MyFood",
+  "name": "my-food",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "build:android": "cd android && ./gradlew assembleRelease"
+    "build:android": "npm run build:clean && cd android && ./gradlew assembleRelease --no-daemon && npm run build:move",
+    "build:clean": "mkdir -p builds && rm -rf builds/*",
+    "build:move": "cp android/app/build/outputs/apk/release/app-release.apk builds/MyFood-release-$(date +%Y%m%d-%H%M%S).apk && echo 'APK copiado para: builds/MyFood-release-'$(date +%Y%m%d-%H%M%S)'.apk'"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.4.6",
@@ -22,7 +24,8 @@
     "react-native-screens": "^4.13.1",
     "react-native-svg": "^15.12.1",
     "react-native-system-navigation-bar": "^2.6.4",
-    "react-native-vector-icons": "^10.3.0"
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-vision-camera": "^4.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

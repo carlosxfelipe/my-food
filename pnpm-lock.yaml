@@ -44,6 +44,9 @@ importers:
       react-native-vector-icons:
         specifier: ^10.3.0
         version: 10.3.0
+      react-native-vision-camera:
+        specifier: ^4.7.2
+        version: 4.7.2(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@19.1.1(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@babel/core':
         specifier: ^7.25.2
@@ -3114,6 +3117,22 @@ packages:
     resolution: {integrity: sha512-IFQ0RE57819hOUdFvgK4FowM5aMXg7C7XKsuGLevqXkkIJatc3QopN0wYrb2IrzUgmdpfP+QVIbI3S6h7M0btw==}
     deprecated: react-native-vector-icons package has moved to a new model of per-icon-family packages. See the https://github.com/oblador/react-native-vector-icons/blob/master/MIGRATION.md on how to migrate
     hasBin: true
+
+  react-native-vision-camera@4.7.2:
+    resolution: {integrity: sha512-C+5PvlSunN6I4aYplSask+v3jfhgduZumIVw6H6lG+Afpf8boIcG3uFSsSfVgj+hxI7fx6qM6bsciEhzgxEUYg==}
+    peerDependencies:
+      '@shopify/react-native-skia': '*'
+      react: '*'
+      react-native: '*'
+      react-native-reanimated: '*'
+      react-native-worklets-core: '*'
+    peerDependenciesMeta:
+      '@shopify/react-native-skia':
+        optional: true
+      react-native-reanimated:
+        optional: true
+      react-native-worklets-core:
+        optional: true
 
   react-native@0.80.2:
     resolution: {integrity: sha512-6ySV4qTJo/To3lgpG/9Mcg/ZtvExqOVZuT7JVGcO5rS2Bjvl/yUAkQF0hTnbRb2Ch6T5MlKghrM4OeHX+KA9Pg==}
@@ -7716,6 +7735,11 @@ snapshots:
     dependencies:
       prop-types: 15.8.1
       yargs: 16.2.0
+
+  react-native-vision-camera@4.7.2(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@19.1.1(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-native: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@19.1.1(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
 
   react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@19.1.1(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0):
     dependencies:
