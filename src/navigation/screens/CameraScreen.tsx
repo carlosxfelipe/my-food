@@ -1,14 +1,16 @@
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { Alert, StyleSheet, View, Text } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Button } from '@react-navigation/elements';
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
   useCodeScanner,
 } from 'react-native-vision-camera';
-import { Alert, StyleSheet, View, Text } from 'react-native';
-import { Button } from '@react-navigation/elements';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useEffect, useState, useCallback } from 'react';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import { ThemedButton } from '../../components/ThemedButton';
+import { ThemedText } from '../../components/ThemedText';
 
 export const CameraScreen = () => {
   const navigation =
@@ -16,6 +18,7 @@ export const CameraScreen = () => {
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
   const [isRequestingPermission, setIsRequestingPermission] = useState(false);
+  const lastScanTime = useRef(0);
 
   // Cores do tema
   const backgroundColor = useThemeColor('background');
@@ -25,6 +28,12 @@ export const CameraScreen = () => {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13', 'ean-8', 'code-128', 'code-39'],
     onCodeScanned: codes => {
+      const now = Date.now();
+      if (now - lastScanTime.current < 2000) {
+        return; // Throttle: ignora scans muito frequentes (2 segundos)
+      }
+      lastScanTime.current = now;
+
       if (codes.length > 0) {
         const code = codes[0];
         console.log(`Código escaneado: ${code.value} (${code.type})`);
@@ -127,6 +136,13 @@ export const CameraScreen = () => {
         {/* Top mask */}
         <View style={[styles.maskTop, { backgroundColor }]} />
 
+        {/* Instruções acima do frame */}
+        <View style={styles.instructionsAboveFrame}>
+          <ThemedText type="defaultSemiBold">
+            Posicione o código dentro do quadro
+          </ThemedText>
+        </View>
+
         <View style={styles.middleRow}>
           {/* Left mask */}
           <View style={[styles.maskSide, { backgroundColor }]} />
@@ -171,11 +187,13 @@ export const CameraScreen = () => {
         <View style={[styles.maskBottom, { backgroundColor }]} />
       </View>
 
-      {/* Instruções */}
+      {/* Botão de entrada manual */}
       <View style={styles.instructionsContainer}>
-        <Text style={[styles.instructionsText, { color: textColor }]}>
-          Posicione o código dentro do quadro
-        </Text>
+        <ThemedButton
+          title="Digitar código manualmente"
+          onPress={() => console.log('Digitar código manualmente')}
+          buttonStyle={styles.manualInputButton}
+        />
       </View>
     </View>
   );
@@ -285,16 +303,16 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
   },
-  instructionsText: {
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-    paddingHorizontal: 20,
-  },
-  // Manter overlay para compatibilidade (não usado)
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
+  instructionsAboveFrame: {
+    position: 'absolute',
+    top: '50%',
+    marginTop: -180, // Posiciona acima do frame (que está em -125)
+    left: 0,
+    right: 0,
     alignItems: 'center',
+    zIndex: 1,
+  },
+  manualInputButton: {
+    marginTop: 20,
   },
 });
