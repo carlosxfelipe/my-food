@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   FlatList,
   ListRenderItem,
@@ -6,37 +6,36 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { ThemedView } from "../../components/ThemedView";
-import { ThemedText } from "../../components/ThemedText";
-import { ThemedButton } from "../../components/ThemedButton";
-import { useThemeColor } from "../../hooks/useThemeColor";
-import { ProductCard } from "../../components/ProductCard";
-import { MOCK_PRODUCTS, Product } from "../../data/products";
-import { useCart } from "../../state/cart";
-import { BRL } from "../../utils/format";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Icon } from "../../components/Icon";
+} from 'react-native';
+import { ThemedView } from '../../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedButton } from '../../components/ThemedButton';
+import { useThemeColor } from '../../hooks/useThemeColor';
+import { ProductCard } from '../../components/ProductCard';
+import { MOCK_PRODUCTS, Product } from '../../data/products';
+import { useCart } from '../../state/cart';
+import { BRL } from '../../utils/format';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Icon } from '../../components/Icon';
 
 type CartItem = Product & { quantity: number };
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export function Orders() {
-  const navigation = useNavigation<
-    NavigationProp<ReactNavigation.RootParamList>
-  >();
+export function OrdersScreen() {
+  const navigation =
+    useNavigation<NavigationProp<ReactNavigation.RootParamList>>();
   const { qty, add, inc, dec, clear } = useCart();
 
-  const bg = useThemeColor("background");
-  const card = useThemeColor("surface");
-  const outline = useThemeColor("outline");
-  const text = useThemeColor("text");
+  const bg = useThemeColor('background');
+  const card = useThemeColor('surface');
+  const outline = useThemeColor('outline');
+  const text = useThemeColor('text');
 
   const items: CartItem[] = useMemo(() => {
     return Object.entries(qty)
       .map(([id, q]) => {
-        const p = MOCK_PRODUCTS.find((pp) => pp.id === id);
+        const p = MOCK_PRODUCTS.find(pp => pp.id === id);
         if (!p || q <= 0) return null;
         return { ...p, quantity: q };
       })
@@ -54,7 +53,7 @@ export function Orders() {
   const extras = shipping + taxes - discount;
   const hasExtras = extras !== 0;
   const finalTotal = subtotal + extras;
-  const totalLabel = hasExtras ? "Total" : "Subtotal";
+  const totalLabel = hasExtras ? 'Total' : 'Subtotal';
   const totalValue = hasExtras ? finalTotal : subtotal;
 
   const renderItem: ListRenderItem<CartItem> = ({ item }) => (
@@ -65,7 +64,8 @@ export function Orders() {
       onIncrease={() => inc(item.id, item.stock)}
       onDecrease={() => dec(item.id)}
       onPress={() =>
-        (navigation as any).navigate("ProductDetails", { id: item.id })}
+        (navigation as any).navigate('ProductDetails', { id: item.id })
+      }
       style={{ flex: 1 }}
     />
   );
@@ -79,19 +79,19 @@ export function Orders() {
           size={48}
           color={outline}
         />
-        <ThemedText type="title" style={{ marginTop: 8, textAlign: "center" }}>
+        <ThemedText type="title" style={{ marginTop: 8, textAlign: 'center' }}>
           Seu carrinho está vazio
         </ThemedText>
-        <ThemedText style={{ marginTop: 8, textAlign: "center" }}>
+        <ThemedText style={{ marginTop: 8, textAlign: 'center' }}>
           Adicione itens na tela “Início”.
         </ThemedText>
         <ThemedButton
           title="Explorar produtos"
           onPress={() => {
             const root = (navigation as any).getParent?.() ?? navigation;
-            root.navigate("HomeTabs" as never, { screen: "Home" } as never);
+            root.navigate('HomeTabs' as never, { screen: 'Home' } as never);
           }}
-          buttonStyle={{ marginTop: 16, alignSelf: "center" }}
+          buttonStyle={{ marginTop: 16, alignSelf: 'center' }}
         />
       </ThemedView>
     );
@@ -102,7 +102,7 @@ export function Orders() {
       <FlatList
         contentContainerStyle={styles.listContent}
         data={items}
-        keyExtractor={(it) => it.id}
+        keyExtractor={it => it.id}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={styles.columns}
@@ -115,9 +115,9 @@ export function Orders() {
           styles.checkoutBar,
           { backgroundColor: card, borderColor: outline },
         ]}
-        accessibilityLabel={`${totalLabel} do carrinho ${
-          BRL.format(totalValue)
-        }`}
+        accessibilityLabel={`${totalLabel} do carrinho ${BRL.format(
+          totalValue,
+        )}`}
       >
         <View style={{ flex: 1 }}>
           <View style={styles.totalsRow}>
@@ -173,9 +173,9 @@ export function Orders() {
           <ThemedButton
             title={`Finalizar pedido (${items.length})`}
             onPress={() => {
-              console.log("checkout");
+              console.log('checkout');
             }}
-            buttonStyle={{ marginTop: 12, width: "100%" }}
+            buttonStyle={{ marginTop: 12, width: '100%' }}
           />
         </View>
       </View>
@@ -190,11 +190,11 @@ const styles = StyleSheet.create({
   emptyWrap: {
     flex: 1,
     padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   checkoutBar: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
@@ -202,9 +202,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
   },
-  totalsRow: { flexDirection: "row", alignItems: "center" },
-  totalLabel: { fontSize: 14, fontWeight: "600", marginRight: 8 },
-  totalValue: { fontSize: 16, fontWeight: "800" },
+  totalsRow: { flexDirection: 'row', alignItems: 'center' },
+  totalLabel: { fontSize: 14, fontWeight: '600', marginRight: 8 },
+  totalValue: { fontSize: 16, fontWeight: '800' },
   clearText: { fontSize: 12 },
   breakdown: {
     marginTop: 6,
@@ -212,11 +212,11 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   breakdownRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingVertical: 2,
   },
   breakdownLabel: { fontSize: 12 },
-  breakdownValue: { fontSize: 12, fontWeight: "700" },
+  breakdownValue: { fontSize: 12, fontWeight: '700' },
   separator: { height: 12 },
 });

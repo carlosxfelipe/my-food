@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
-import { ThemedView } from "../../components/ThemedView";
-import { ThemedText } from "../../components/ThemedText";
+import { StyleSheet } from 'react-native';
+import { ThemedView } from '../../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
 
-export function Settings() {
+export function SettingsScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">Tela de Configurações</ThemedText>

@@ -5,12 +5,12 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HeaderButton, Text } from '@react-navigation/elements';
-import { Home } from './screens/Home';
-import { Orders } from './screens/Orders';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
-import { Favorites } from './screens/Favorites';
-import { NotFound } from './screens/NotFound';
+import { HomeScreen } from './screens/HomeScreen';
+import { OrdersScreen } from './screens/OrdersScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
+import { FavoritesScreen } from './screens/FavoritesScreen';
+import { NotFoundScreen } from './screens/NotFoundScreen';
 import { BottomTabAdapter } from './BottomTabAdapter';
 import { AppHeader } from './AppHeader';
 import { ProductDetails } from './screens/ProductDetails';
@@ -19,7 +19,7 @@ import { CameraScreen } from './screens/CameraScreen';
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Home: {
-      screen: Home,
+      screen: HomeScreen,
       options: {
         title: 'Início',
         tabBarIconNameActive: 'home',
@@ -27,7 +27,7 @@ const HomeTabs = createBottomTabNavigator({
       } as any,
     },
     Orders: {
-      screen: Orders,
+      screen: OrdersScreen,
       options: {
         title: 'Pedidos',
         tabBarIconNameActive: 'package-variant',
@@ -43,7 +43,7 @@ const HomeTabs = createBottomTabNavigator({
     //   } as any,
     // },
     Favorites: {
-      screen: Favorites,
+      screen: FavoritesScreen,
       options: {
         title: 'Favoritos',
         tabBarIconNameActive: 'heart',
@@ -51,7 +51,7 @@ const HomeTabs = createBottomTabNavigator({
       } as any,
     },
     Profile: {
-      screen: Profile,
+      screen: ProfileScreen,
       options: {
         title: 'Perfil',
         tabBarIconNameActive: 'account',
@@ -87,7 +87,7 @@ const RootStack = createNativeStackNavigator({
       },
     },
     Profile: {
-      screen: Profile,
+      screen: ProfileScreen,
       linking: {
         path: ':user(@[a-zA-Z0-9-_]+)',
         parse: { user: value => value.replace(/^@/, '') },
@@ -95,7 +95,7 @@ const RootStack = createNativeStackNavigator({
       },
     },
     Settings: {
-      screen: Settings,
+      screen: SettingsScreen,
       options: ({ navigation }) => ({
         presentation: 'modal',
         headerLeft: () => null, // Remove a seta de voltar no modal para exibir apenas o botão "Close"
@@ -114,7 +114,7 @@ const RootStack = createNativeStackNavigator({
       },
     },
     NotFound: {
-      screen: NotFound,
+      screen: NotFoundScreen,
       options: { title: '404' },
       linking: { path: '*' },
     },

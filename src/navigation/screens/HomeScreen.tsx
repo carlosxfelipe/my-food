@@ -1,47 +1,46 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
-import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
-import { ThemedText } from "../../components/ThemedText";
-import { useThemeColor } from "../../hooks/useThemeColor";
-import { ProductCard } from "../../components/ProductCard";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Icon } from "../../components/Icon";
-import { HomeHeader } from "../../components/HomeHeader";
-import { MOCK_PRODUCTS, Product } from "../../data/products";
-import { BRL } from "../../utils/format";
-import { useCart } from "../../state/cart";
-import { ProductGridSkeleton } from "../../components/ProductGridSkeleton";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
+import { ThemedText } from '../../components/ThemedText';
+import { useThemeColor } from '../../hooks/useThemeColor';
+import { ProductCard } from '../../components/ProductCard';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Icon } from '../../components/Icon';
+import { HomeHeader } from '../../components/HomeHeader';
+import { MOCK_PRODUCTS, Product } from '../../data/products';
+import { BRL } from '../../utils/format';
+import { useCart } from '../../state/cart';
+import { ProductGridSkeleton } from '../../components/ProductGridSkeleton';
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export function Home() {
-  const navigation = useNavigation<
-    NavigationProp<ReactNavigation.RootParamList>
-  >();
+export function HomeScreen() {
+  const navigation =
+    useNavigation<NavigationProp<ReactNavigation.RootParamList>>();
   // q = query efetiva (debounced)
   // rawQ = query imediata vinda do header
-  const [rawQ, setRawQ] = useState("");
-  const [q, setQ] = useState("");
+  const [rawQ, setRawQ] = useState('');
+  const [q, setQ] = useState('');
   const [tag, setTag] = useState<string | undefined>(undefined);
   const DEBUG_SKELETON = false;
   const [loading, setLoading] = useState(true);
 
   const { qty, add, inc, dec } = useCart();
 
-  const bg = useThemeColor("background");
-  const card = useThemeColor("surface");
-  const outline = useThemeColor("outline");
-  const textColor = useThemeColor("text");
+  const bg = useThemeColor('background');
+  const card = useThemeColor('surface');
+  const outline = useThemeColor('outline');
+  const textColor = useThemeColor('text');
 
   // conecta a barra de busca do Header a esta tela
   useLayoutEffect(() => {
     navigation.setOptions?.({
       onChangeQuery: (value: string) => {
         setTag(undefined);
-        setRawQ(value ?? "");
+        setRawQ(value ?? '');
       },
       onSearch: (query: string) => {
         setTag(undefined);
-        setRawQ(query ?? "");
+        setRawQ(query ?? '');
       },
       cartCount: Object.values(qty).reduce((a, b) => a + b, 0),
     } as any);
@@ -79,14 +78,14 @@ export function Home() {
     let base = MOCK_PRODUCTS;
 
     if (tag) {
-      base = base.filter((p) =>
-        (p.tags ?? []).map((t) => t.toLowerCase()).includes(tag.toLowerCase())
+      base = base.filter(p =>
+        (p.tags ?? []).map(t => t.toLowerCase()).includes(tag.toLowerCase()),
       );
     }
 
     if (query.length >= 2) {
-      base = base.filter((p) =>
-        [p.name, p.sku].some((s) => s?.toLowerCase().includes(query))
+      base = base.filter(p =>
+        [p.name, p.sku].some(s => s?.toLowerCase().includes(query)),
       );
     }
     return base;
@@ -94,7 +93,7 @@ export function Home() {
 
   const subtotal = useMemo(() => {
     return Object.entries(qty).reduce((acc, [id, amount]) => {
-      const prod = MOCK_PRODUCTS.find((p) => p.id === id);
+      const prod = MOCK_PRODUCTS.find(p => p.id === id);
       return acc + (prod ? prod.price * amount : 0);
     }, 0);
   }, [qty]);
@@ -109,7 +108,8 @@ export function Home() {
         onIncrease={() => inc(item.id, item.stock)}
         onDecrease={() => dec(item.id)}
         onPress={() =>
-          (navigation as any).navigate("ProductDetails", { id: item.id })}
+          (navigation as any).navigate('ProductDetails', { id: item.id })
+        }
         style={{ flex: 1 }}
       />
     );
@@ -119,7 +119,7 @@ export function Home() {
 
   const chips = useMemo(
     () =>
-      Array.from(new Set(MOCK_PRODUCTS.flatMap((p) => p.tags ?? []))).filter(
+      Array.from(new Set(MOCK_PRODUCTS.flatMap(p => p.tags ?? []))).filter(
         Boolean,
       ),
     [],
@@ -129,63 +129,64 @@ export function Home() {
     <HomeHeader
       chips={chips}
       activeTag={tag}
-      onPick={(picked) => {
-        setRawQ("");
-        setQ("");
+      onPick={picked => {
+        setRawQ('');
+        setQ('');
         setTag(picked);
       }}
       onClear={() => {
         setTag(undefined);
-        setRawQ("");
-        setQ("");
+        setRawQ('');
+        setQ('');
       }}
     />
   );
 
   return (
     <View style={[styles.container, { backgroundColor: bg }]}>
-      {DEBUG_SKELETON || loading
-        ? (
-          <>
-            {header}
-            <ProductGridSkeleton />
-          </>
-        )
-        : (
-          <FlatList
-            contentContainerStyle={styles.listContent}
-            data={data}
-            keyExtractor={keyExtractor}
-            renderItem={renderItem}
-            numColumns={2}
-            columnWrapperStyle={styles.columns}
-            ItemSeparatorComponent={ItemSeparator}
-            ListHeaderComponent={header}
-            showsVerticalScrollIndicator={false}
-            ListEmptyComponent={
-              <View style={{ flex: 1, alignItems: "center", marginTop: 32 }}>
-                <Icon
-                  name="cookie-off"
-                  size={48}
-                  color={textColor}
-                  family="material-community"
-                />
-                <ThemedText
-                  type="defaultSemiBold"
-                  style={{ marginTop: 16, textAlign: "center" }}
-                >
-                  Nenhum produto encontrado para “{q}”.
-                </ThemedText>
-              </View>
-            }
-          />
-        )}
+      {DEBUG_SKELETON || loading ? (
+        <>
+          {header}
+          <ProductGridSkeleton />
+        </>
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.listContent}
+          data={data}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          numColumns={2}
+          columnWrapperStyle={styles.columns}
+          ItemSeparatorComponent={ItemSeparator}
+          ListHeaderComponent={header}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 32 }}>
+              <Icon
+                name="cookie-off"
+                size={48}
+                color={textColor}
+                family="material-community"
+              />
+              <ThemedText
+                type="defaultSemiBold"
+                style={{ marginTop: 16, textAlign: 'center' }}
+              >
+                Nenhum produto encontrado para “{q}”.
+              </ThemedText>
+            </View>
+          }
+        />
+      )}
 
       <View
-        style={[styles.cartBar, {
-          backgroundColor: card,
-          borderColor: outline,
-        }]}
+        style={[
+          styles.cartBar,
+          {
+            backgroundColor: card,
+            borderColor: outline,
+          },
+        ]}
         accessibilityLabel={`Subtotal do carrinho ${BRL.format(subtotal)}`}
       >
         <View style={styles.cartLeft}>
@@ -211,18 +212,18 @@ const styles = StyleSheet.create({
   columns: { gap: 12 },
   separator: { height: 12 },
   cartBar: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  cartLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-  cartText: { fontSize: 14, fontWeight: "600" },
-  cartValue: { fontSize: 16, fontWeight: "800" },
+  cartLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  cartText: { fontSize: 14, fontWeight: '600' },
+  cartValue: { fontSize: 16, fontWeight: '800' },
 });

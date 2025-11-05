@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo } from "react";
+import React, { useLayoutEffect, useMemo } from 'react';
 import {
   FlatList,
   ListRenderItem,
@@ -6,32 +6,31 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { ThemedView } from "../../components/ThemedView";
-import { ThemedText } from "../../components/ThemedText";
-import { useThemeColor } from "../../hooks/useThemeColor";
-import { ProductCard } from "../../components/ProductCard";
-import { Icon } from "../../components/Icon";
-import { MOCK_PRODUCTS, Product } from "../../data/products";
-import { useFavorites } from "../../state/favorites";
-import { useCart } from "../../state/cart";
-import { BRL } from "../../utils/format";
-import { ThemedButton } from "../../components/ThemedButton";
+} from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { ThemedView } from '../../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { useThemeColor } from '../../hooks/useThemeColor';
+import { ProductCard } from '../../components/ProductCard';
+import { Icon } from '../../components/Icon';
+import { MOCK_PRODUCTS, Product } from '../../data/products';
+import { useFavorites } from '../../state/favorites';
+import { useCart } from '../../state/cart';
+import { BRL } from '../../utils/format';
+import { ThemedButton } from '../../components/ThemedButton';
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export function Favorites() {
-  const navigation = useNavigation<
-    NavigationProp<ReactNavigation.RootParamList>
-  >();
+export function FavoritesScreen() {
+  const navigation =
+    useNavigation<NavigationProp<ReactNavigation.RootParamList>>();
 
-  const primary = useThemeColor("primary");
-  const onPrimary = useThemeColor("onPrimary");
-  const bg = useThemeColor("background");
-  const card = useThemeColor("surface");
-  const outline = useThemeColor("outline");
-  const text = useThemeColor("text");
+  const primary = useThemeColor('primary');
+  const onPrimary = useThemeColor('onPrimary');
+  const bg = useThemeColor('background');
+  const card = useThemeColor('surface');
+  const outline = useThemeColor('outline');
+  const text = useThemeColor('text');
 
   const { ids, toggle, count } = useFavorites();
   const { qty, add, inc, dec } = useCart();
@@ -39,12 +38,12 @@ export function Favorites() {
   const items: Product[] = useMemo(() => {
     if (!ids.size) return [];
     const set = ids;
-    return MOCK_PRODUCTS.filter((p) => set.has(p.id));
+    return MOCK_PRODUCTS.filter(p => set.has(p.id));
   }, [ids]);
 
   useLayoutEffect(() => {
     navigation.setOptions?.({
-      title: count > 0 ? `Favoritos (${count})` : "Favoritos",
+      title: count > 0 ? `Favoritos (${count})` : 'Favoritos',
     } as any);
   }, [navigation, count]);
 
@@ -60,12 +59,14 @@ export function Favorites() {
           onPress={() => toggle(item.id)}
           hitSlop={8}
           style={[styles.favBtn, { backgroundColor: primary }]}
-          accessibilityLabel={ids.has(item.id)
-            ? "Remover dos favoritos"
-            : "Adicionar aos favoritos"}
+          accessibilityLabel={
+            ids.has(item.id)
+              ? 'Remover dos favoritos'
+              : 'Adicionar aos favoritos'
+          }
         >
           <Icon
-            name={ids.has(item.id) ? "heart" : "heart-outline"}
+            name={ids.has(item.id) ? 'heart' : 'heart-outline'}
             family="material-community"
             size={18}
             color={onPrimary}
@@ -79,7 +80,8 @@ export function Favorites() {
           onIncrease={() => inc(item.id, item.stock)}
           onDecrease={() => dec(item.id)}
           onPress={() =>
-            (navigation as any).navigate("ProductDetails", { id: item.id })}
+            (navigation as any).navigate('ProductDetails', { id: item.id })
+          }
           style={{ flex: 1 }}
         />
       </View>
@@ -95,19 +97,19 @@ export function Favorites() {
           size={48}
           color={outline}
         />
-        <ThemedText type="title" style={{ marginTop: 8, textAlign: "center" }}>
+        <ThemedText type="title" style={{ marginTop: 8, textAlign: 'center' }}>
           Nada por aqui ainda
         </ThemedText>
-        <ThemedText style={{ marginTop: 6, textAlign: "center", opacity: 0.9 }}>
+        <ThemedText style={{ marginTop: 6, textAlign: 'center', opacity: 0.9 }}>
           Toque no coração de um produto para favoritá-lo.
         </ThemedText>
         <ThemedButton
           title="Explorar produtos"
           onPress={() => {
             const root = (navigation as any).getParent?.() ?? navigation;
-            root.navigate("HomeTabs" as never, { screen: "Home" } as never);
+            root.navigate('HomeTabs' as never, { screen: 'Home' } as never);
           }}
-          buttonStyle={{ marginTop: 16, alignSelf: "center" }}
+          buttonStyle={{ marginTop: 16, alignSelf: 'center' }}
         />
       </ThemedView>
     );
@@ -118,7 +120,7 @@ export function Favorites() {
       <FlatList
         contentContainerStyle={styles.listContent}
         data={items}
-        keyExtractor={(it) => it.id}
+        keyExtractor={it => it.id}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={styles.columns}
@@ -127,15 +129,10 @@ export function Favorites() {
       />
 
       <View
-        style={[
-          styles.bar,
-          { backgroundColor: card, borderColor: outline },
-        ]}
-        accessibilityLabel={`Subtotal no carrinho dos favoritos: ${
-          BRL.format(
-            subtotal,
-          )
-        }`}
+        style={[styles.bar, { backgroundColor: card, borderColor: outline }]}
+        accessibilityLabel={`Subtotal no carrinho dos favoritos: ${BRL.format(
+          subtotal,
+        )}`}
       >
         <View style={styles.barLeft}>
           <Icon
@@ -164,33 +161,33 @@ const styles = StyleSheet.create({
   emptyWrap: {
     flex: 1,
     padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   favBtn: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 2,
     right: 8,
     top: 8,
     width: 32,
     height: 32,
     borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bar: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  barLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-  barText: { fontSize: 13, fontWeight: "600" },
-  barValue: { fontSize: 16, fontWeight: "800" },
+  barLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  barText: { fontSize: 13, fontWeight: '600' },
+  barValue: { fontSize: 16, fontWeight: '800' },
 });

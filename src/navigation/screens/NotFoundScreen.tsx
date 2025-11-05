@@ -1,9 +1,9 @@
-import { Button } from "@react-navigation/elements";
-import { StyleSheet } from "react-native";
-import { ThemedView } from "../../components/ThemedView";
-import { ThemedText } from "../../components/ThemedText";
+import { Button } from '@react-navigation/elements';
+import { StyleSheet } from 'react-native';
+import { ThemedView } from '../../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
 
-export function NotFound() {
+export function NotFoundScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">404</ThemedText>
