@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Alert, StyleSheet, View, Text } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Button } from '@react-navigation/elements';
 import {
   Camera,
   useCameraDevice,
@@ -23,7 +22,6 @@ export const CameraScreen = () => {
   // Cores do tema
   const backgroundColor = useThemeColor('background');
   const primary = useThemeColor('primary');
-  const textColor = useThemeColor('text');
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13', 'ean-8', 'code-128', 'code-39'],
@@ -85,40 +83,9 @@ export const CameraScreen = () => {
     }
   }, [hasPermission, isRequestingPermission, handleRequestPermission]);
 
-  if (!hasPermission) {
-    return (
-      <View style={[styles.permissionContainer, { backgroundColor }]}>
-        <Text style={[styles.permissionTitle, { color: textColor }]}>
-          Acesso à Câmera Necessário
-        </Text>
-        <Text style={[styles.permissionText, { color: textColor }]}>
-          Para escanear códigos de barras e QR codes, precisamos acessar sua
-          câmera.
-        </Text>
-        <Button
-          onPress={handleRequestPermission}
-          disabled={isRequestingPermission}
-        >
-          {isRequestingPermission
-            ? 'Solicitando...'
-            : 'Permitir Acesso à Câmera'}
-        </Button>
-        <Button onPress={() => navigation.goBack()} style={styles.backButton}>
-          Voltar
-        </Button>
-      </View>
-    );
-  }
+  if (!hasPermission) return; // Permitir Acesso à Câmera
 
-  if (device == null) {
-    return (
-      <View style={[styles.container, { backgroundColor }]}>
-        <Button onPress={() => navigation.goBack()}>
-          Câmera não disponível
-        </Button>
-      </View>
-    );
-  }
+  if (device == null) return; // Câmera não disponível
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
@@ -202,27 +169,6 @@ export const CameraScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  permissionContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  permissionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  permissionText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  backButton: {
-    marginTop: 12,
   },
   maskContainer: {
     ...StyleSheet.absoluteFillObject,
